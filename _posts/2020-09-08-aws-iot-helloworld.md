@@ -5,7 +5,7 @@ date:   2020-09-08
 categories: aws
 ---
 
-AWS IoT Greengrass에서 Raspberry Pi를  연결하여 Hello World를 보내보도록 해보자 
+AWS IoT Greengrass에서 Raspberry Pi를  연결하는 세팅을 해본다.
 
 사전에 라즈베리에 라즈베리안 os와 ssh기능이 활성화 되어야 하고 인터넷연결이 가능한 상태이어야 한다.
 
