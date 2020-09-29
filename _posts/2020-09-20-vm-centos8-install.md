@@ -110,6 +110,18 @@ hostname -I
 
 ![centos8m15](/assets/images/centos8m15.png)
 
+가상호스트에서 설정을 클릭한다.
+
+![centos8m18](/assets/images/centos8m18.png)
+
+네트워크에서 어댑터1, 어댑터2를 각각 아래와 같이 설정한다.
+
+![centos8m18](/assets/images/centos8m19.png)
+
+![centos8m18](/assets/images/centos8m20.png)
+
+가상호스트를 실행한다.
+
 이제 Putty를 통해 설정해주면 정상적으로 접속됨을 확인할 수 있다.
 
 ![centos8m16](/assets/images/centos8m16.png)
