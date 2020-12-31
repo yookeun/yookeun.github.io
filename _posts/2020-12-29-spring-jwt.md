@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Springboot에서 JWT 간단 사용하기"
-date:   2020-10-01
+date:   2020-12-29
 categories: aws
 ---
 
