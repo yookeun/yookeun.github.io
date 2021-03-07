@@ -2,7 +2,7 @@
 layout: post
 title:  "Springboot에서 JWT 간단 사용하기"
 date:   2020-12-29
-categories: aws
+categories: java
 ---
 
 기존에 [Spring security JWT 연동](https://yookeun.github.io/java/2017/07/23/spring-jwt/)에 기술했던 내용에서는 spring aouth2를 활용해서 jwt연동을 수행했다. 하지만 aouth2 설정, private key, public key 생성등 복잡한 과정이 많았다. 단순하게 REST API서버에서 해당 암호키를 가지고 있고, 등록된 회원인증을 거쳐서 토큰을 발행하면 좀더 심플하게 처리가 가능하다.  기존의 Security 설정은 거의 동일하다. 
