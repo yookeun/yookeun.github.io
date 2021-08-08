@@ -49,12 +49,45 @@ Enter file in which to save the key (/Users/kim/.ssh/id_rsa):
 
 ```bash
 Host github.com
+	HostName github.com
 	User kim
 	IdentityFile ~/.ssh/id_rsa
 Host gitlab.com
+	HostName github.com
 	User kim2
 	IdentityFile ~/.ssh/company_id_rsa
 ```
 
 `User`에는 git 서비스 계정을 각각 입력하면 된다.
 이렇게 하면 알아서 호스트명에 따라 알아서 ssh키로 접근하게 된다.
+
+
+
+### 4. 멀티계정 상요하기 
+
+gitlab, github에서 여러계정을 사용할 때의 경우이다.
+일단 config파일을 수정하도록 하자.
+github에서 kim, kim2를 계정을 사용한다고 하면 
+
+```bash
+Host github.com
+	HostName github.com
+	User kim
+	IdentityFile ~/.ssh/id_rsa
+Host github.com-b
+	HostName github.com
+	User kim2
+	IdentityFile ~/.ssh/company_id_rsa
+```
+
+이와 같이 `github.com-b` 이라는 별도의 호스트별칭을 만든다.
+그리고 나서 git clone이나 remote add 추가시 위의 경로로 처리하면 된다. 
+
+```base 
+git clone git@github.com-b:kim2/kim2-test.git
+```
+or 
+
+```bash 
+git remote add origin git@github.com-b:kim2/kim2-test.git
+```
