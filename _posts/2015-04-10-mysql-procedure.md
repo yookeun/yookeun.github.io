@@ -174,8 +174,7 @@ BEGIN
 			END IF;
 			UPDATE BOOKS SET bookOriginPrice = _NEW_ORIGIN_PRICE WHERE bookID = _bookID;
 			UPDATE BOOKS_SELL SET bookSellPrice = _NEW_SELL_PRICE WHERE bookID = _bookID;
-			SET _row_count = _row_count + 1;
-			SET _done = FALSE;
+			SET _row_count = _row_count + 1;			
 		END IF;
 	UNTIL _done END REPEAT;
 
