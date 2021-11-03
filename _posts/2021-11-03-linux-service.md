@@ -25,7 +25,7 @@ else
 fi   
 ```
 
-### 1. 중지 스크립트 작성(stop.sh)
+### 2. 중지 스크립트 작성(stop.sh)
 test.jar를 중지시키는 스크립트 
 
 ```bash 
