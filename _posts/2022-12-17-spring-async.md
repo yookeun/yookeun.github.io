@@ -164,7 +164,7 @@ TestService
 
 정상적으로 비동기로 처리되었다. 가급적 비동기 메소드는 별도의 Service로 분리해서 사용하는 것이 위와 같은 실수를 줄이는 좋은 방법이라 할 수 있다.
 
-[spring-async-test]([yookeun/spring-async-test (github.com)](https://github.com/yookeun/spring-async-test))
+[spring-async-test](https://github.com/yookeun/spring-async-test)
 
 
 
