@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Spring에서 @Transaction 사용시 주의점"
+title:  "Spring에서 @Transactional 사용시 주의점"
 date:   2022-07-31
 categories: java
 ---
