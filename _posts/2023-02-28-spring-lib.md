@@ -149,7 +149,7 @@ public class SpringTestApplication {
 }
 ```
 
-이제 실제 구현해보면 잘 수행이 된다. 즉 해당 서비스가 가동될때 라이브러리를 읽는데 이때 라이브러리에 spring.factories가 있다면 해당 파일을 읽어들여 스프링 컨테이너에 빈등록을 하게 된다. 
+이제 실제 구현해보면 잘 수행이 된다. 즉 해당 서비스가 가동될때 라이브러리를 읽는데 이때 라이브러리에 spring.factories가 있다면 해당 파일을 읽어들여 스프링 컨테이너에 빈등록을 하게 된다. 이때 추가한 TestLibConfig가 설정빈으로 등록되면서 그안에 @ComponentScan으로 인해 우리가 추가한 라이브러리의 Service가 빈으로 등록되게 된다.
 
 ![lib2](/assets/images/lib2.png)
 
