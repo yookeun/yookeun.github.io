@@ -138,6 +138,20 @@ public class TestLibConfig {
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.example.springtestlib.TestLibConfig
 ```
 
+**[중요!]**
+
+spring.factories가 deprecated 되었다고 한다. Spring 3.0 부터는 지원이 안된다고 한다. 따라서 3.0 이후에는 아래처럼 처리해야 한다.
+
+아래 폴더에 `org.springframework.boot.autoconfigure.AutoConfiguration.imports` 파일 생성 
+
+> src/main/resources/META-INF/srping/org.springframework.boot.autoconfigure.AutoConfiguration.imports
+
+그 파일안에 자동설정할 클래스를 작성한다.
+
+> com.example.springtestlib.TestLibConfig
+
+
+
 다시 빌드하고 사용하는 곳에서 빌드 리프레쉬하여 사용해보자. 이때 @ComponentScan(basePackages = {"com.example"}) 이부분은 이제 필요없다. 그냥 Implementaion만 구현되어 있으면 된다. 
 
 ```java 
