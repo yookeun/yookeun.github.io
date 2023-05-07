@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "내가 기져야 할 개발자 마인드"
+title:  "내가 가져야 할 개발자 마인드"
 date:   2023-04-19
 categories: think
 ---
