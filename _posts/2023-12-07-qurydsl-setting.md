@@ -1,5 +1,5 @@
 ---
-layout: POST
+layout: post
 title:  "Springboot3.x에서 QueryDSL 설정"
 date:   2023-12-07
 categories: java
