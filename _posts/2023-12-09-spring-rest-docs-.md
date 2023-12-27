@@ -233,7 +233,7 @@ Item에 필요한 Save-Item, Update-Item, View-Item, List-Item에 대한 api에 
 
 `src/main/resources/static/doc` 디렉토리를 생성하면 adoc파일에 해당 경로의 html로 변환되어 저장된다. 그래서 최종 빌드를 하게 되면 index.html, Item-API.html, Member-API.html, Order-API.html 파일이 만들어지고 index.html에서 확인 할 수가 있다. 
 
-마지막으로 jar로 배포하고 실행하면 아래 경로에서 확
+마지막으로 jar로 배포하고 실행하면 아래 경로에서 확인이 가능하다.
 
 ***http://localhost:8080/docs/index.html\***.
 
