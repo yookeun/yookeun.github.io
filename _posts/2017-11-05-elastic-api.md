@@ -1,20 +1,21 @@
 ---
-layout: post
+layout: single
 title: Elasticsearch와 spring 연동
 date: 2017-11-05
-categories: elasticsearch
+categories: [elasticsearch]
+tags: [elasticsearch]
 ---
 
-Spring에서 Elasticsearch와 연동해보자. Elasticsearch는 기본적으로 http통신의 RestAPI이기 때문에 스프링에서 제공하는 RestTemplete를 이용해도 된다. 여기서는 Elasticsearch에서 제공하는 라이브러리를 이용해보도록 해보자. 
+Spring에서 Elasticsearch와 연동해보자. Elasticsearch는 기본적으로 http통신의 RestAPI이기 때문에 스프링에서 제공하는 RestTemplete를 이용해도 된다. 여기서는 Elasticsearch에서 제공하는 라이브러리를 이용해보도록 해보자.
 
 ### 1. 엘라스틱서치 라이브러리 설치
 
 엘라스틱서치에서 제공하는 [RestAPI](https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/index.html) 에는 공식적으로 두 가지 api가 존재한다.
 
-- java Low Level REST Client
-- java High Level REST Client
+-   java Low Level REST Client
+-   java High Level REST Client
 
-기본적인 PUT, POST, GET, DELETE 등은 `low level` 버전으로 충분히 커버가 된다. `high level` 버전의 가장 큰 특징은 비동기메소드를 제공한다는 것이다. 여기서는 `low level` 버전으로 시작해보겠다. 
+기본적인 PUT, POST, GET, DELETE 등은 `low level` 버전으로 충분히 커버가 된다. `high level` 버전의 가장 큰 특징은 비동기메소드를 제공한다는 것이다. 여기서는 `low level` 버전으로 시작해보겠다.
 
 ```xml
 <dependency>
@@ -30,13 +31,13 @@ dependencies {
 }
 ```
 
-관련 라이브러리를 메이븐, 그래들 버전에 따라 받으면 된다. 
+관련 라이브러리를 메이븐, 그래들 버전에 따라 받으면 된다.
 
 ### 2. 구현
 
-Spring boot를 기준으로 설명한다. 아래와 같이 클래스를 생성한다. 
+Spring boot를 기준으로 설명한다. 아래와 같이 클래스를 생성한다.
 
-``` java
+```java
 @Component
 public class ElasticApi {
 
@@ -95,7 +96,7 @@ public class ElasticApi {
 }
 ```
 
- 주석에 설명이 있는 것처럼 `callElasticApi` 메소드를 만들고 엘라스틱서치 api에서 제공하는 RestClient를 통해서 연동하면 간단히 해결된다. 단 다음과 같은 객체 형식으로 넘길 경우 객체를 json으로 변환시켜야 하는데 간단하게 gson으로 처리하도록 했다.  그리고 엘라스틱서치에 연동 host, port등은 `application.properties`에 등록하면 편리하다. 
+주석에 설명이 있는 것처럼 `callElasticApi` 메소드를 만들고 엘라스틱서치 api에서 제공하는 RestClient를 통해서 연동하면 간단히 해결된다. 단 다음과 같은 객체 형식으로 넘길 경우 객체를 json으로 변환시켜야 하는데 간단하게 gson으로 처리하도록 했다. 그리고 엘라스틱서치에 연동 host, port등은 `application.properties`에 등록하면 편리하다.
 
 이제 실행하는 메소드를 작성하자.
 
@@ -223,9 +224,9 @@ public class ElasticSpringExampleApplicationTests {
 }
 ```
 
-[post] - [put] - [get] - [delete]식으로 잘 출력이 됨을 확인할 수 있다. 그런데 실무에서는 아마도 `x-pack`를 설치해서 허가된 요청만 처리할 있게 할 것이다. 그런 경우에는 x-pack에서 별도의 계정을 생성한 후에 해당 계정과 패스워드를 application.properties등에 등록하고 api를 호출할때 헤더에 포함시켜 주면 된다. 
+[post] - [put] - [get] - [delete]식으로 잘 출력이 됨을 확인할 수 있다. 그런데 실무에서는 아마도 `x-pack`를 설치해서 허가된 요청만 처리할 있게 할 것이다. 그런 경우에는 x-pack에서 별도의 계정을 생성한 후에 해당 계정과 패스워드를 application.properties등에 등록하고 api를 호출할때 헤더에 포함시켜 주면 된다.
 
-### 3. API에 인증(Authorization) 추가 
+### 3. API에 인증(Authorization) 추가
 
 상단의 소스에서 `callElasticApi`메소드에 인증부분을 추가한 `callElasticApiAuth`를 구성했다.
 
@@ -275,9 +276,8 @@ public Map<String, Object> callElasticApiAuth(String method, String url, Object 
     }
 ```
 
- 추가된 부분은 바로 헤더처리 부분이다. 엘라스틱에서 `Authorization` 부분은 `<user_name>:<password>` 로 구성되고 이것을 `base64`로 인코딩해주면 된다. 그런 다음에 생성된 Headers[] headers 를 `performRequest` 메소드에 파라미터를 추가해주면 된다.  
+추가된 부분은 바로 헤더처리 부분이다. 엘라스틱에서 `Authorization` 부분은 `<user_name>:<password>` 로 구성되고 이것을 `base64`로 인코딩해주면 된다. 그런 다음에 생성된 Headers[] headers 를 `performRequest` 메소드에 파라미터를 추가해주면 된다.
 
 이렇게 엘라스틱에서 제공하는 client api를 통해 간단히 연동을 할 수 있다. 전체 소스는 아래에서 확인할 수 있다.
 
-- [elastic-spring-example](https://github.com/yookeun/elasic-spring-example)
-
+-   [elastic-spring-example](https://github.com/yookeun/elasic-spring-example)

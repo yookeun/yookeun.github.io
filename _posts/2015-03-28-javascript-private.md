@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "Javascript에서 비공개맴버 처리"
-date:   2015-03-28
-categories: javascript
+layout: single
+title: "Javascript에서 비공개맴버 처리"
+date: 2015-03-28
+categories: [javascript]
+tags: [javascript]
 ---
 
 자바스크립트에서 객체와 생성자함수에는 자바와는 달리 public, private등의 별도의 문법이 없다.
@@ -12,20 +13,20 @@ categories: javascript
 
 ```javascript
 var person = {
-  name : "Lee",
-  getName: function() {
-    return this.name;
-  }
+    name: "Lee",
+    getName: function () {
+        return this.name;
+    },
 };
 person.name = "kim"; //공개적인 접근이 가능하다.
 console.log(person.name);
 console.log(person.getName());
 
 function Person() {
-  this.name = "Lee";
-  this.getName = function() {
-    return this.name;
-  };
+    this.name = "Lee";
+    this.getName = function () {
+        return this.name;
+    };
 }
 
 var p = new Person();
@@ -38,11 +39,11 @@ console.log(p.getName());
 
 ```javascript
 function Person() {
-  //비공개맴버
-  var name = "Lee";
-  this.getName = function() {
-    return name;
-  };
+    //비공개맴버
+    var name = "Lee";
+    this.getName = function () {
+        return name;
+    };
 }
 
 var p = new Person();
@@ -59,13 +60,13 @@ p.name="kim"은 지역변수가 아니고 프로퍼티 'name'이 추가된 것�
 다음 소스를 보자.
 
 ```javascript
-var per = (function(){
-  var name = "Lee";
-  return {
-    getName: function(){
-      return name;
-    }
-  };
+var per = (function () {
+    var name = "Lee";
+    return {
+        getName: function () {
+            return name;
+        },
+    };
 })();
 console.log(per.name); //undefined 출력된다.
 console.log(per.getName()); //lee가 출력된다.
@@ -78,25 +79,25 @@ console.log(per.getName()); //lee가 출력된다.
 아래 소스를 보자.
 
 ```javascript
-function Person(){
-  //비공개맴버
-  var name = "Lee";
+function Person() {
+    //비공개맴버
+    var name = "Lee";
 
-  //공개함수
-  this.getName = function() {
-    return name;
-  };
+    //공개함수
+    this.getName = function () {
+        return name;
+    };
 }
 
-Person.prototype = (function(){
-  //비공개맴버
-  var age = 30;
-  //공개 프로토타입
-  return {
-    getAge: function() {
-      return age;
-    }
-  };
+Person.prototype = (function () {
+    //비공개맴버
+    var age = 30;
+    //공개 프로토타입
+    return {
+        getAge: function () {
+            return age;
+        },
+    };
 })();
 
 var p = new Person();

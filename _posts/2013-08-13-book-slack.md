@@ -1,12 +1,13 @@
 ---
-layout: post
-title:  "[추천서적] 슬랙(Slack)"
-date:   2013-08-13
-categories: book
+layout: single
+title: "[추천서적] 슬랙(Slack)"
+date: 2013-08-13
+categories: [book]
+tags: [book]
 ---
 
 `Slack` : 여유, 느슨함, 완만함
-이 책은 한마디로 일에 있어서 꽉 짜인 효율성보다는 적절한 여유(slack)가 오히려 창의성을 높이고 결국 질적으로 더 좋아진다는 내용이다. 
+이 책은 한마디로 일에 있어서 꽉 짜인 효율성보다는 적절한 여유(slack)가 오히려 창의성을 높이고 결국 질적으로 더 좋아진다는 내용이다.
 
 ![slack](/assets/images/slack.jpg)
 

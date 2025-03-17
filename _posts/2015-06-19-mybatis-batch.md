@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "MyBatis에서 Batch처리(SqlSession과 foreach)"
-date:   2015-06-19
-categories: java
+layout: single
+title: "MyBatis에서 Batch처리(SqlSession과 foreach)"
+date: 2015-06-19
+categories: [java]
+tags: [java, mybatis]
 ---
 
 Spring과 MyBatis연동시 배치를 처리할 경우가 있다. 한꺼번에 인서트나 업데이트가 필요한 경우있다.
@@ -18,7 +19,7 @@ applicationContext.xml에 다음을 추가한다.
 
 ```xml
 <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
-	<constructor-arg index="0" ref="sqlSessionFactory" />  	
+	<constructor-arg index="0" ref="sqlSessionFactory" />
 	<constructor-arg index="1" value="BATCH" />
 </bean>
 ```
@@ -30,6 +31,7 @@ applicationContext.xml에 다음을 추가한다.
 	UPDATE test_book SET originPrice = 0  WHERE bookID = #{bookID}
 </update>
 ```
+
 그리고 나서 DAO 클래스에서는 다음과 같이 처리한다.
 
 ```java
@@ -79,14 +81,14 @@ public void executeUpdateBatch(String batchType) {
 				paramMap = new HashMap<String, Object>();
 				paramMap.put("list", list);
 				bookSerive.updateBatch2(paramMap);
-			}				
-		} //end while 							
+			}
+		} //end while
 
 	} catch (Exception e) {
 		e.printStackTrace();
 	} finally {
 		if (list != null) list.clear();
-	}		
+	}
 }
 ```
 
@@ -112,13 +114,13 @@ private void executeUpdateBatch(String batchType) {
 }
 ```
 
-실제로 위 메소드를 실행한 소요시간이다. (10만건 업데이트)  
+실제로 위 메소드를 실행한 소요시간이다. (10만건 업데이트)
 
 ```bash
 [sqlSession batch] 소요시간  : 68(ms)
 ```
 
-이것을 이번에는  xml에서 foreach 처리로 바꾸어보자.
+이것을 이번에는 xml에서 foreach 처리로 바꾸어보자.
 
 ### 2. XML에서 foreach구문으로 배치처리
 
@@ -132,6 +134,7 @@ sql구문처리하는 xml소스를 보자.updateBatch2 메소드가 추가된다
 	</foreach>
 </update>
 ```
+
 bookID를 IN으로 처리하고 그 부분을 foreach로 처리한다. collection은 list라는 맴변수이고 거기에는 TestBook의 클래스들이 리스트로 담겨져있다.
 그러므로 item은 testBook으로 하면 `#{testBook.bookID}`로 접근해야 한다.
 DAO클래스를 보자.
@@ -142,6 +145,7 @@ public void updateBatch2(Map<String, Object> map) {
 	sqlSession.update("TestBook.updateBatch2", map);
 }
 ```
+
 DAO클래스는 간단하게 작성되었다.(Serive 클래스도 같다) 중요한 것은 실제로 호출하는 Controller클래스이다.
 
 ```java
@@ -151,6 +155,7 @@ Map<String, Object>paramMap = new HashMap<String, Object>();
 paramMap.put("list", list);
 bookSerive.updateBatch2(paramMap);
 ```
+
 즉, Map파라미터에 list라는 값을 넣고 실제로 collection값을 넣어야 한다. 그래서 foreach구문에 collection값에 map에 할당된 변수를 넣어주고,
 item에 변수를 지정하여 그 값으로 반복처리하는 것이다.
 
@@ -161,7 +166,7 @@ All finished
 [foreach batch] 소요시간  : 7(ms)
 ```
 
-__무려 9배의 속도가 단축되었다.__ (어찌보면 당연한다 한번에 쿼리로 일괄처리하는 것이 더 효율적인 것이다)
+**무려 9배의 속도가 단축되었다.** (어찌보면 당연한다 한번에 쿼리로 일괄처리하는 것이 더 효율적인 것이다)
 
 인서트부분도 같은 10만건에 데이트를 다른 테이블에 인서트하는 테스트를 해보았는데 역시 같은 수준의 속도가 나왔다.
 
@@ -185,11 +190,11 @@ INSERT INTO TEST(id, name) VALUES
 	VALUES
 	<foreach item="testBook" index="index" collection="list" open="" separator="," close="">
 		(#{testBook.bookID}, #{testBook.bookName}, #{testBook.originPrice}, NOW())
-	</foreach>		
+	</foreach>
 </insert>
 ```
 
 `()`부분이 반복되므로 open, close는 비워주고, separator만 ","로 처리하면 된다.  
-가급적 배치처리에는 Mybatis의  foreach를 사용하는 것이 훨씬 효율적이다.
+가급적 배치처리에는 Mybatis의 foreach를 사용하는 것이 훨씬 효율적이다.
 
 위 예제전체소스는 <https://github.com/yookeun/mybatis-batch-test> 에서 확인할 수 있다.

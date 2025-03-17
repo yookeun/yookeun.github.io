@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "eclipse에서 emmet를 사용하자."
-date:   2014-06-26
-categories: tools
+layout: single
+title: "eclipse에서 emmet를 사용하자."
+date: 2014-06-26
+categories: [tool]
+tags: [tool]
 ---
 
 Zen Coding이라고 html태그등을 특수한 문법을 통해 쉽게 아주 빠르게 작성할수있는 코딩법이다.

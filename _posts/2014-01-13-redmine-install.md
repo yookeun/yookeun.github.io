@@ -1,16 +1,17 @@
 ---
-layout: post
-title:  "Redmine을 ubunt14.04에 설치하기"
-date:   2014-01-13
-categories: linux
+layout: single
+title: "Redmine을 ubunt14.04에 설치하기"
+date: 2014-01-13
+categories: [linux]
+tags: [linux, ubuntu]
 ---
 
 우분투에 [레드마인(redmine)](http://www.redmine.org/)을 설치해보자.
 
 설치환경은 아래와 같다.
 
->OS  : Ubuntu 14.04 Server 64bit
-DB  : '5.5.33a-MariaDB'
+> OS : Ubuntu 14.04 Server 64bit
+> DB : '5.5.33a-MariaDB'
 
 레드마인은 아피치+MYSQL로 연동되어진다. 그러므로 두개가 설치되어야 한다.
 (mariaDB도 가능하다)
@@ -23,7 +24,7 @@ DB  : '5.5.33a-MariaDB'
 첫째는 기존의 mysql or mariaDB를 사용할때에는 위 문서대로 하면 안된다.
 (만약 mysql도 새로 설치해야 한다면 위문서대로 가면 된다. 그러나 libapache2-mod-passenger는 해결해야 한다)
 
-둘째는 libapache2-mod-passenger이것을 설치하면 문제가 발생한다.   
+둘째는 libapache2-mod-passenger이것을 설치하면 문제가 발생한다.  
 <http://openarisu.tistory.com/231> (2) 에 둘째 문제에 대해 잘 설명하고 있다.
 
 그래서 (1), (2)문서를 참고와 토대로 설치작업을 진행한다. (우분투이고 해당서버에 이미 mysql or mariadb가 설치된 경우)
@@ -35,7 +36,7 @@ DB  : '5.5.33a-MariaDB'
 설치된 서버의 my.cnf를 열자
 
 만약 거기서
-`socket = /tmp/mysql.sock` 로 세팅되어 있다면 레드마인에서 못 읽는다.   
+`socket = /tmp/mysql.sock` 로 세팅되어 있다면 레드마인에서 못 읽는다.  
 그 이유는 레드마인을 설치할때 `/var/run/mysqld/mysqld.sock` 를 통해서 mysql에 접근하기 때문이다.
 
 따라서 다음과 같이 임시로 링크를 만들어준다.
@@ -60,26 +61,25 @@ sudo apt-get install redmine redmine-mysql
 
 위 명령이 실행되면 아래의 처럼 prompt화면이 출력된다.
 
- ┌──────────────────────────┤ Configuring redmine ├──────────────────────────┐  
- │                                                                           │  
- │ The redmine/instances/default package must have a database installed and  │  
- │ configured before it can be used.  This can be optionally handled with    │  
- │ dbconfig-common.                                                          │  
- │                                                                           │  
- │ If you are an advanced database administrator and know that you want to   │  
- │ perform this configuration manually, or if your database has already      │  
- │ been installed and configured, you should refuse this option.  Details    │  
- │ on what needs to be done should most likely be provided in                │  
- │ /usr/share/doc/redmine/instances/default.                                 │  
- │                                                                           │  
- │ Otherwise, you should probably choose this option.                        │  
- │                                                                           │  
- │ Configure database for redmine/instances/default with dbconfig-common?    │  
- │                                                                           │  
- │                    <Yes>                       <No>                       │  
- │                                                                           │  
- └───────────────────────────────────────────────────────────────────────────┘  
-
+┌──────────────────────────┤ Configuring redmine ├──────────────────────────┐  
+ │ │  
+ │ The redmine/instances/default package must have a database installed and │  
+ │ configured before it can be used. This can be optionally handled with │  
+ │ dbconfig-common. │  
+ │ │  
+ │ If you are an advanced database administrator and know that you want to │  
+ │ perform this configuration manually, or if your database has already │  
+ │ been installed and configured, you should refuse this option. Details │  
+ │ on what needs to be done should most likely be provided in │  
+ │ /usr/share/doc/redmine/instances/default. │  
+ │ │  
+ │ Otherwise, you should probably choose this option. │  
+ │ │  
+ │ Configure database for redmine/instances/default with dbconfig-common? │  
+ │ │  
+ │ <Yes> <No> │  
+ │ │  
+ └───────────────────────────────────────────────────────────────────────────┘
 
 `<Yes>`를 선택하면 설정이 시작된다. Mysql(or mariaDB)루트계정과 레드마인이 사용할 패스워드를 지정해주자.
 이부분은 [HowTo_Install_Redmine_on_Ubuntu_step_by_step](http://www.redmine.org/projects/redmine/wiki/) 를 참조하라.
@@ -106,7 +106,7 @@ $sudo apt-get install libcurl4-openssl-dev libssl-dev zlib1g-dev apache2-prefork
 $sudo passenger-install-apache2-module
 ```
 
-자 이렇게 하면 갑자기 prompt화면으로 변경이 된다. 일단 엔터를 친다.  계속 엔터를 친다.
+자 이렇게 하면 갑자기 prompt화면으로 변경이 된다. 일단 엔터를 친다. 계속 엔터를 친다.
 그러면 아래와 같은 화면이 보이게 된다.
 
 ```bash
@@ -126,7 +126,6 @@ Press ENTER to continue.
 이제 아파치 설정으로 넘어가자.
 
 ### 4. 아파치 설정
-
 
 ```bash
 sudo vi /etc/apache2/mods-available/passenger.load
@@ -153,7 +152,6 @@ PassengerDefaultRuby /usr/bin/ruby1.9.1
 PassengerDefaultUser www-data
 </IfModule>
 ```
-
 
 레드마인을 연결하기 위한 심볼링 링크를 만들자.
 
@@ -189,17 +187,17 @@ sudo service apache2 restart
 
 `http://아파치설치아이피/redmine`을 치면 레드마인 초기화면이 보일 것이다.
 
-
 이제 레드마인을 즐기면 된다.
 
 ---
+
 ---
 
 ### 7. 아래와 같은 장애발생시 조치사항
 
 장애1)
 
->ERROR: 'rake/rdoctask' is obsolete and no longer supported. Use 'rdoc/task' (available in RDoc 2.4.2+) instead.
+> ERROR: 'rake/rdoctask' is obsolete and no longer supported. Use 'rdoc/task' (available in RDoc 2.4.2+) instead.
 
 해결방법)>
 
@@ -207,10 +205,9 @@ sudo service apache2 restart
 sudo gem install rdoc
 ```
 
-
 장애2)
 
->no such file to load -- fastercsvError when running rake db:migrate, check database configuration.
+> no such file to load -- fastercsvError when running rake db:migrate, check database configuration.
 
 해결방법)
 
@@ -226,7 +223,7 @@ gem 'fastercsv'
 
 장애3)
 
->Gemfile.lock 퍼미션 에러가 난 경우 (웹페이지에서)
+> Gemfile.lock 퍼미션 에러가 난 경우 (웹페이지에서)
 
 해결방법)
 

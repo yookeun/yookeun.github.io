@@ -1,9 +1,11 @@
 ---
-layout: post
-title:  "mybatis에서 selectKey 사용법"
-date:   2014-07-11
-categories: java
+layout: single
+title: "mybatis에서 selectKey 사용법"
+date: 2014-07-11
+categories: [java]
+tags: [java, mybatis]
 ---
+
 DB작업을 하다보면 먼저 사전에 어떤 키값을 가져와서 증가시켜서 입력하거나
 혹은 입력후에 증가된 키값을 가져올 필요가 있다.
 
@@ -34,15 +36,15 @@ iq는 자동증가값이고 boardID는 unique하게 증가되서 입력되어야
 ```xml
 <insert id="insertBoard" parameterType="Board">
     <selectKey resultType="string" keyProperty="boardID" order="BEFORE">
-        SELECT MAX(boardID)+1 FROM board        
-    </selectKey>    
+        SELECT MAX(boardID)+1 FROM board
+    </selectKey>
     INSERT INTO board(boardID, title, content)
     VALUES(#{boardID}, #{title}, #{content})
-</insert>  
+</insert>
 ```
 
 `<selectKey>`구문을 `<insert>`구문에 넣어준다.
-`resultType`은 해당 컬럽의 타입을 정해주면 된다.  `keyProperty`는 컬럼명이다.
+`resultType`은 해당 컬럽의 타입을 정해주면 된다. `keyProperty`는 컬럼명이다.
 Board 클래스에서는 boardID가 setter, getter메소드가 존재해야 한다. (getBoard(), setBoardID())
 
 order는 해당 쿼리의 순서를 의미하다. BEFORE라면 insert쿼리문 수행전에 selectKey가 실행된다. 위에서는 기존의 boardID를 가져오는 부분이기 때문에 당연히 `order=BEFORE`를 사용했다.
@@ -59,7 +61,7 @@ order는 해당 쿼리의 순서를 의미하다. BEFORE라면 insert쿼리문 �
     VALUES(#{boarID}, #{title}, #{content})
     <selectKey resultType="int" keyProperty="iq" order="AFTER">
         SELECT LAST_INSERT_ID()
-    </selectKey>        
+    </selectKey>
 </insert>
 ```
 
@@ -70,9 +72,9 @@ order는 해당 쿼리의 순서를 의미하다. BEFORE라면 insert쿼리문 �
 
 ```xml
 <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-    <constructor-arg index="0" ref="sqlSessionFactory" />      
+    <constructor-arg index="0" ref="sqlSessionFactory" />
     <!--<constructor-arg index="1" value="BATCH" /> -->
-</bean>  
+</bean>
 ```
 
 이렇게 하지 않으면 값을 가져오는 부분에서 모두 `-2147482646` 로 처리되면서 원하는 값을 얻어오지 못하게 된다.

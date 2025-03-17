@@ -1,14 +1,15 @@
 ---
-layout: post
-title:  "Mac에서 homebrew를 통한 mariadb 설치"
-date:   2014-11-16
-categories: mac
+layout: single
+title: "Mac에서 homebrew를 통한 mariadb 설치"
+date: 2014-11-16
+categories: [mac]
+tags: [mac]
 ---
 
 맥에서 homebrew를 이용해서 mariadb를 설치해본다.
 
 환경:OX Yosemite  
-먼저 <[homebrew](http://brew.sh/)>를 설치해야 한다. homebrew는 우분투의 apt-get 같은 패키지인스톨 프로그램이라고 생각하면 된다.  
+먼저 <[homebrew](http://brew.sh/)>를 설치해야 한다. homebrew는 우분투의 apt-get 같은 패키지인스톨 프로그램이라고 생각하면 된다.
 
 위 사이트에서 설치를 진행한다. 설치가 완료된 다음 터미널에서 brew 를 치면 명령어의 설명이 나오면 정상으로 설치된 것이다.
 
@@ -52,6 +53,7 @@ brew install mariadb
 ```bash
 unset TM PDIR
 ```
+
 설치된 경로로 이동하자. 10.0.14_1버전이 설치되어 있다. (탭키로 치면 경로나옴)
 
 ```bash
@@ -66,11 +68,10 @@ mysql_install_db
 
 그러면 아래와 같이 설치가 진행이 된다.
 
-
 ```bash
 Installing MariaDB/MySQL system tables in '/usr/local/var/mysql' ...
 16 18:09:08 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
-user created by default.  
+user created by default.
 You can start the MariaDB daemon with:
 
 ..중략...
@@ -80,7 +81,6 @@ SkySQL Ab. You can contact us about this at sales@skysql.com.
 Alternatively consider joining our community based development effort:
 http://mariadb.com/kb/en/contributing-to-the-mariadb-project/
 ```
-
 
 자. 이제 mariadb를 가동시켜본다.
 
@@ -94,4 +94,4 @@ Starting MySQL
 
 SUCCESS가 나오면 성공이다.
 
-- 참고 사이트 : <https://mariadb.com/blog/installing-mariadb-10010-mac-os-x-homebrew>
+-   참고 사이트 : <https://mariadb.com/blog/installing-mariadb-10010-mac-os-x-homebrew>

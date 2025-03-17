@@ -1,21 +1,22 @@
 ---
-layout: post
-title:  "Springboot3.x에서 QueryDSL 설정"
-date:   2023-12-07
-categories: java
+layout: single
+title: "Springboot3.x에서 QueryDSL 설정"
+date: 2023-12-07
+categories: [java]
+tags: [java, querydsl]
 ---
 
-스프링부트 3.x 버전에서 QueryDSL을 설정해 본다. 
+스프링부트 3.x 버전에서 QueryDSL을 설정해 본다.
 
-```java 
-    //querydsl 
+```java
+    //querydsl
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 ```
 
-다음 Qfile를 생성할 경로를 처리해준다. 
+다음 Qfile를 생성할 경로를 처리해준다.
 
 ```groovy
 def generated = 'src/main/generated'
@@ -36,9 +37,9 @@ clean {
 }
 ```
 
-마지막으로 javaConfig로 처리해주면 완료된다. 
+마지막으로 javaConfig로 처리해주면 완료된다.
 
-```java 
+```java
 @Configuration
 public class JpaConfig {
     @PersistenceContext

@@ -1,10 +1,10 @@
 ---
-layout: post
-title:  "Maven에서 서버별 패키징하기"
-date:   2015-07-20
-categories: java
+layout: single
+title: "Maven에서 서버별 패키징하기"
+date: 2015-07-20
+categories: [java]
+tags: [java, maven]
 ---
-
 
 Maven으로 개발시 환경별로 패키징해야 할 필요가 있다.  
 즉, DB가 로컬, 데모, 리얼서버별로 각각 다를 경우 DB접속정보는 각각 다르다. 이때 각각 다른 접속정보를 가지고 패키징이 되어야 한다.
@@ -18,7 +18,7 @@ log4j.xml, properties/jdbc.properties 를 만든다. 아래 그림을 참조하�
 
 <div style="text-align:center;margin-bottom: 30px;">
 <img src="/assets/images/packaging1.jpg" style="width:100%">
-</div>  
+</div>
 
 그리고 properties/jdbc.properties에 jdbc.url에 로컬, 데모, 서버별로 각각 기록한다.
 log4j.xml도 마찬가지이다.
@@ -37,26 +37,28 @@ jdbc.password=111222333
 ### 2. Java Build Path 수정
 
 `Add Folder...` 클릭한다.
+
 <div style="text-align:center;margin-bottom: 30px;">
 <img src="/assets/images/packaging2.jpg" style="width:100%">
 </div>
 
 `resources-local`를 선택하고 `OK`를 클릭한다.
+
 <div style="text-align:center;margin-bottom: 30px;">
 <img src="/assets/images/packaging3.jpg" style="width:100%">
 </div>
 
 `resources-local`를 `resources` 바로 아래에 위치시킨다.
+
 <div style="text-align:center;margin-bottom: 30px;">
 <img src="/assets/images/packaging4.jpg" style="width:100%">
 </div>
 
-
 최종적으로 완료된 모습이다.
+
 <div style="text-align:center;margin-bottom: 30px;">
 <img src="/assets/images/packaging5.jpg" style="width:100%">
 </div>
-
 
 ### 3. pom.xml에 설정추가
 
@@ -90,9 +92,8 @@ jdbc.password=111222333
 	<configuration>
 	     <encoding>UTF-8</encoding>
 	</configuration>
- </plugin>   
+ </plugin>
 ```
-
 
 `profiles`를 추가한다.
 
@@ -130,7 +131,6 @@ jdbc.password=111222333
 
 기존에 application.xml등에 직접 jdbc설정하는 부분을 propeties를 읽어들이는 부분으로 변경한다.
 
-
 ```xml
 <bean id="propertyPlaceholderConfigurer"
        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -140,18 +140,18 @@ jdbc.password=111222333
 </bean>
 
 <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"  destroy-method="close">
-	<property name="driverClassName" value="${jdbc.driverClassName}" />		 
+	<property name="driverClassName" value="${jdbc.driverClassName}" />
 	<property name="url" value="${jdbc.url}" />
 	<property name="username" value="${jdbc.username}" />
 	<property name="password" value="${jdbc.password}" />
 	<property name="validationQuery" value="select 1"/>  <!-- 오라클은 select 1 from dual -->
 	<property name="validationQueryTimeout" value="3600"/>
-</bean>		
+</bean>
 ```
 
 ### 5. 배포
 
-배포할 때는 `pom.xml`의 `<profiles>`의 정의된 `<id>`를 붙혀주면 된다.   
+배포할 때는 `pom.xml`의 `<profiles>`의 정의된 `<id>`를 붙혀주면 된다.  
 로컬은 디폴트이므로 생략이 가능하다.
 
 ```bash

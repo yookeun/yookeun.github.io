@@ -1,15 +1,16 @@
 ---
-layout: post
-title:  "Springboot에서 JWT 간단 사용하기"
-date:   2020-12-29
-categories: java
+layout: single
+title: "Springboot에서 JWT 간단 사용하기"
+date: 2020-12-29
+categories: [java]
+tags: [java, jwt]
 ---
 
-기존에 [Spring security JWT 연동](https://yookeun.github.io/java/2017/07/23/spring-jwt/)에 기술했던 내용에서는 spring aouth2를 활용해서 jwt연동을 수행했다. 하지만 aouth2 설정, private key, public key 생성등 복잡한 과정이 많았다. 단순하게 REST API서버에서 해당 암호키를 가지고 있고, 등록된 회원인증을 거쳐서 토큰을 발행하면 좀더 심플하게 처리가 가능하다.  기존의 Security 설정은 거의 동일하다. 
+기존에 [Spring security JWT 연동](https://yookeun.github.io/java/2017/07/23/spring-jwt/)에 기술했던 내용에서는 spring aouth2를 활용해서 jwt연동을 수행했다. 하지만 aouth2 설정, private key, public key 생성등 복잡한 과정이 많았다. 단순하게 REST API서버에서 해당 암호키를 가지고 있고, 등록된 회원인증을 거쳐서 토큰을 발행하면 좀더 심플하게 처리가 가능하다. 기존의 Security 설정은 거의 동일하다.
 
-### 1. 회원 테이블 
+### 1. 회원 테이블
 
-```sql 
+```sql
 # user테이블 생성
 CREATE table `users`
 (
@@ -27,7 +28,7 @@ insert into users(user_id, password, user_name, role)
 values('hong', '{bcrypt}$2a$10$5ueMHBZpCGZ9oesru.MQluiHxOLuMzAcmqHqrfier3ILUCxhiXNBm', '홍길동', 'ROLE_USER');
 ```
 
-### 2. build.grade의 dependencies 정보 
+### 2. build.grade의 dependencies 정보
 
 ```groovy
 dependencies {
@@ -51,18 +52,18 @@ dependencies {
 
 ```
 
-`io.jsonwebtoken:jjwt-api` 라이브러리를 설정한다. 
+`io.jsonwebtoken:jjwt-api` 라이브러리를 설정한다.
 
-### 3. 구현하려는 REST API 
+### 3. 구현하려는 REST API
 
-| url                 | Param            | 설명                                                         |
-| ------------------- | ---------------- | ------------------------------------------------------------ |
+| url                 | Param            | 설명                                                                                                                         |
+| ------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | GET /api/v1/hello   |                  | 토큰을 가지고 있으면 해당 API를 접근할 수 있는 유저만 호출이 가능하다. <br />호출이 성공되면 "Hello, {유저명}" response된다. |
-| POST /auth/v1/login | userId, password | userId, password로 조회해서 등록된 회원이면 JWT 토큰을 리턴한다. |
+| POST /auth/v1/login | userId, password | userId, password로 조회해서 등록된 회원이면 JWT 토큰을 리턴한다.                                                             |
 
 ApiController에서 /api/v1/hello부분을 아래와 같이 단순하게 처리했다.
 
-```java 
+```java
 @RestController
 @RequestMapping("/api/v1")
 public class ApiController {
@@ -78,15 +79,15 @@ public class ApiController {
  }
 ```
 
-이때 `/api/v1/hello/ 를 호출할때는 header부분에 jwt토큰을 파싱해서 정상적이면 위에 로직이 수행되면서 파싱할때 세션에 담은 userId를 리턴해주는 것이다. 이렇게 하기 위해서는 먼저 /api/~~를 호출할때 jwt필터를 처리해줄 필터클래스가 필요한데 그전에 jwt 토큰을 생성하고 파싱하는 유틸클래스를 만들어보자 
+이때 `/api/v1/hello/ 를 호출할때는 header부분에 jwt토큰을 파싱해서 정상적이면 위에 로직이 수행되면서 파싱할때 세션에 담은 userId를 리턴해주는 것이다. 이렇게 하기 위해서는 먼저 /api/~~를 호출할때 jwt필터를 처리해줄 필터클래스가 필요한데 그전에 jwt 토큰을 생성하고 파싱하는 유틸클래스를 만들어보자
 
-### 4. JwtUtil 생성 
+### 4. JwtUtil 생성
 
 아래소스는 아래 깃랩 소스를 참고한 것임을 밝힌다.
 
 https://github.com/koushikkothagal/spring-security-jwt/blob/master/src/main/java/io/javabrains/springsecurityjwt/util/JwtUtil.java
 
-```java 
+```java
 package com.example.springjwt.util;
 
 import com.example.springjwt.entity.Users;
@@ -158,23 +159,23 @@ public class JwtUtil {
 
 ```
 
-`${jwt.secret-key}` 를 application.yml에 세팅한다. 비밀키로 이건 서버에만 있으니까 그냥 UUID으로 고정값으로 처리했다. 외부에 유출되지 않도록 해야 한다. 
+`${jwt.secret-key}` 를 application.yml에 세팅한다. 비밀키로 이건 서버에만 있으니까 그냥 UUID으로 고정값으로 처리했다. 외부에 유출되지 않도록 해야 한다.
 
-```yml 
+```yml
 jwt.secret-key: c88d74ba-1554-48a4-b549-b926f5d77c9e
 ```
 
-` .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))` 로 토큰 만료시간을 24시간으로 지정했다. createToken에서는 주어진 userId를 Jwt토큰의 subject에 담도록 처리했다.  이제 해당 유틸을 처리하는 필터클래스를 만들어보자.
+` .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))` 로 토큰 만료시간을 24시간으로 지정했다. createToken에서는 주어진 userId를 Jwt토큰의 subject에 담도록 처리했다. 이제 해당 유틸을 처리하는 필터클래스를 만들어보자.
 
-파싱시에 `JwtException` 처리를 통해서 토큰이상여부(만료일 포함)를 체크하도록 한다. 
+파싱시에 `JwtException` 처리를 통해서 토큰이상여부(만료일 포함)를 체크하도록 한다.
 
-### 5. JwtRequestFilter 생성 
+### 5. JwtRequestFilter 생성
 
-JwtRequestFilter는  url를 호출할때 필터링을 처리해주는 클래스이다. 해당 클래스는 `OncePerRequestFilter`를 상속받아 처리한다. 
+JwtRequestFilter는 url를 호출할때 필터링을 처리해주는 클래스이다. 해당 클래스는 `OncePerRequestFilter`를 상속받아 처리한다.
 
 > OncePerRequstFilter는 같은 요청에 대해서 단 한번만 처리가 수행되는 것을 보장하는 기반 클래스이다.
 
-```java 
+```java
 package com.example.springjwt.filter;
 
 import com.example.springjwt.config.UserDetailService;
@@ -257,13 +258,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 }
 ```
 
-해당 필터의 내용을 보면 `/auth/**` 에서는 토큰 처리를 하지 않도록 한다. 당연히 로그인을 하지 않은 상태이므로 토큰이 없기 때문이다. 그래서 `/api/**` 에서만 토큰필터를 처리한다. Bearer로 시작된 토큰을 읽어서 username, 토큰정상여부(만료일등)등을 확인하는 검증을 거치고 비정상적인 토큰이라면 `invalid token`으로 리턴해주고 정상이면 세션값 userId에 username을 세팅한다. 
+해당 필터의 내용을 보면 `/auth/**` 에서는 토큰 처리를 하지 않도록 한다. 당연히 로그인을 하지 않은 상태이므로 토큰이 없기 때문이다. 그래서 `/api/**` 에서만 토큰필터를 처리한다. Bearer로 시작된 토큰을 읽어서 username, 토큰정상여부(만료일등)등을 확인하는 검증을 거치고 비정상적인 토큰이라면 `invalid token`으로 리턴해주고 정상이면 세션값 userId에 username을 세팅한다.
 
-### 6. SecurityConfig 설정 
+### 6. SecurityConfig 설정
 
-WebSecurityConfigurerAdapter를 상속받은 SecurityConfig를 설정하고 HttpSecurity부분을 아래와 같이 설정한다. 
+WebSecurityConfigurerAdapter를 상속받은 SecurityConfig를 설정하고 HttpSecurity부분을 아래와 같이 설정한다.
 
-```java 
+```java
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
@@ -277,13 +278,13 @@ WebSecurityConfigurerAdapter를 상속받은 SecurityConfig를 설정하고 Http
     }
 ```
 
-`/auth/**`는 누구나 접근이 가능하고 `/api/**` 는 해당유저가 `ROLE_USER`라는 권한이 있어야 접근이 가능하다. 그리고 위에서 만든 jwtRequestFilter를 등록했다. 
+`/auth/**`는 누구나 접근이 가능하고 `/api/**` 는 해당유저가 `ROLE_USER`라는 권한이 있어야 접근이 가능하다. 그리고 위에서 만든 jwtRequestFilter를 등록했다.
 
-### 7. Controller 설정 
+### 7. Controller 설정
 
 계정/패스워드를 검증해서 통과하면 토큰을 생성해주는 `AuthController`이다.
 
-```java 
+```java
 @RestController
 @RequestMapping("/auth/v1")
 @RequiredArgsConstructor
@@ -315,11 +316,11 @@ public class AuthController {
 }
 ```
 
-userId, password를 검증하고 통과하면 jwt토큰을 발행하고 리턴한다. 
+userId, password를 검증하고 통과하면 jwt토큰을 발행하고 리턴한다.
 
-다음은 토큰값과 접근권한이 있어야만 접근할 수 있는 `ApiController`이다. 
+다음은 토큰값과 접근권한이 있어야만 접근할 수 있는 `ApiController`이다.
 
-```java 
+```java
 @RestController
 @RequestMapping("/api/v1")
 public class ApiController {
@@ -334,8 +335,6 @@ public class ApiController {
     }
  }
 ```
-
-
 
 ### 8. 결과화면
 
@@ -353,8 +352,8 @@ POST /auth/v1/login에 유효한 계정과 패스워드로 전송하면 아래�
 
 해당 URL에 대한 ROLE(권한)이 다르다면 아래와 같이 에러 표시된다.
 
- ![jwt4](/assets/images/jwt4.png)
+![jwt4](/assets/images/jwt4.png)
 
-해당 전체 소스는 아래에서 확인할 수 있다. 
+해당 전체 소스는 아래에서 확인할 수 있다.
 
 [https://github.com/yookeun/spring-jwt](https://github.com/yookeun/spring-jwt)

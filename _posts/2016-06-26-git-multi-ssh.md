@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "SSH 인증 여러개 사용하기"
-date:   2016-06-26
-categories: tools
+layout: single
+title: "SSH 인증 여러개 사용하기"
+date: 2016-06-26
+categories: [git]
+tags: [git]
 ---
 
 Github나 Gitlab(or Bitbucket) 등 여러개의 GIT 서비스를 사용한다면 ssh를 각각 해두고 싶을 때가 있다.  
@@ -61,13 +62,11 @@ Host gitlab.com
 `User`에는 git 서비스 계정을 각각 입력하면 된다.
 이렇게 하면 알아서 호스트명에 따라 알아서 ssh키로 접근하게 된다.
 
-
-
-### 4. 멀티계정 상요하기 
+### 4. 멀티계정 상요하기
 
 gitlab, github에서 여러계정을 사용할 때의 경우이다.
 일단 config파일을 수정하도록 하자.
-github에서 kim, kim2를 계정을 사용한다고 하면 
+github에서 kim, kim2를 계정을 사용한다고 하면
 
 ```bash
 Host github.com
@@ -81,13 +80,14 @@ Host github.com-b
 ```
 
 이와 같이 `github.com-b` 이라는 별도의 호스트별칭을 만든다.
-그리고 나서 git clone이나 remote add 추가시 위의 경로로 처리하면 된다. 
+그리고 나서 git clone이나 remote add 추가시 위의 경로로 처리하면 된다.
 
-```base 
+```base
 git clone git@github.com-b:kim2/kim2-test.git
 ```
-or 
 
-```bash 
+or
+
+```bash
 git remote add origin git@github.com-b:kim2/kim2-test.git
 ```

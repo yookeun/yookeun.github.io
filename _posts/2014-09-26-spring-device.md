@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "Spring에서 Device별(desktop, mobile, tablet)로 접근 구분하는 방법"
-date:   2014-09-26
-categories: java
+layout: single
+title: "Spring에서 Device별(desktop, mobile, tablet)로 접근 구분하는 방법"
+date: 2014-09-26
+categories: [java]
+tags: [java, spring]
 ---
 
 `Spring`에서 간단하게 접속하는 `Device(desktop, mobile, tablet)`를 구분하는 방법이 있다.
@@ -25,7 +26,7 @@ categories: java
 </mvc:interceptors>
 ```
 
-### 3. `web.xml`에서 필터링부분을  추가한다.
+### 3. `web.xml`에서 필터링부분을 추가한다.
 
 ```xml
 <filter>
@@ -45,8 +46,8 @@ categories: java
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
 @RequestMapping("/hello")
-    public @ResponseBody String detectDevice(HttpServletRequest request) {        
-        Device device = DeviceUtils.getCurrentDevice(request);        
+    public @ResponseBody String detectDevice(HttpServletRequest request) {
+        Device device = DeviceUtils.getCurrentDevice(request);
         if (device == null) {
             return "device is null";
         }

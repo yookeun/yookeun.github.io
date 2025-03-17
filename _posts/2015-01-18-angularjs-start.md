@@ -1,12 +1,12 @@
 ---
-layout: post
-title:  "AngularJS 공부를 위한 세팅준비"
-date:   2015-01-18
-categories: javascript
+layout: single
+title: "AngularJS 공부를 위한 세팅준비"
+date: 2015-01-18
+categories: [javascript]
+tags: [javascript]
 ---
 
-Javascript framework인 AngularJS를 공부하기 위해 세팅부터 하자.  
-
+Javascript framework인 AngularJS를 공부하기 위해 세팅부터 하자.
 
 일단 그냥 html만들고, js만들어서 브라우저를 실행시켜도 되지만, 웹서버에서 구동하면서 공부하면 더 많은 장점을 얻을 수 있다.
 Tomcat등을 이용해서 활용할 수도 있지만, node.js의 npm를 이용해서 설치하도록 한다.
@@ -46,12 +46,12 @@ sudo npm install -g yo
 sudo npm install -g bower
 ```
 
-
 ### 5. Yeoman을 이용해서 angular 용 웹사이트를 만들려면, angualr generator를 설치한다.
 
 ```bash
 sudo npm install -g generator-angular
 ```
+
 이제 모든 프로그램이 설치완료가 되었다.  
 화면UI는 bootstrap를 사용하고 angualrJS용 웹사이트의 뼈대를 구축하자.
 
@@ -70,7 +70,6 @@ Sass설치를 묻는다. 취향대로 선택하자.
 <img src="/assets/images/yeoman2.jpg" style="width:100%">
 </div>
 Bootstrap를 사용할지 묻는다. 당연히 Y다.
-
 
 <div style="text-align:center;margin-bottom: 30px;">
 <img src="/assets/images/yeoman3.jpg" style="width:100%">
@@ -95,7 +94,8 @@ Grunt를 구동하자.
 
 ```bash
 grunt server
-````
+```
+
 정상적으로 작동되면 아래와 같은 초기화면이 보여진다.
 
 <div style="text-align:center;margin-bottom: 30px;">

@@ -1,17 +1,18 @@
 ---
-layout: post
-title:  "JPA에서 JoinTable 사용"
-date:   2022-06-30
-categories: java
+layout: single
+title: "JPA에서 JoinTable 사용"
+date: 2022-06-30
+categories: [java]
+tags: [spring, jpa]
 ---
 
 JPA에서 Join테이블을 사용해본다.
 
-ERD구조는 아래와 같다. 
+ERD구조는 아래와 같다.
 
 ![erd](/assets/images/demo2.jpg)
 
-회원과 아이템 테이블 사이에 my_item이라는 조인테이블을 생성한다. 회원별로 아이템을 등록할 수 있지만,  회원에게 중복된 아이템 등록은 허용하지 않는다.  Member 엔티티에 아래와 같이 조인테이블을 설정해준다. 조인테이블은 별도의 엔티티가 필요하지 않다. 
+회원과 아이템 테이블 사이에 my_item이라는 조인테이블을 생성한다. 회원별로 아이템을 등록할 수 있지만, 회원에게 중복된 아이템 등록은 허용하지 않는다. Member 엔티티에 아래와 같이 조인테이블을 설정해준다. 조인테이블은 별도의 엔티티가 필요하지 않다.
 
 ```java
 @OneToMany
@@ -24,15 +25,15 @@ private List<Item> items = new ArrayList<>();
 
 ```
 
-`joinsColumns`에 member와 조인을 할 member_id를 지정하고 `inverseJoinColumns`에는 Item.item_id를 지정하면 되다. 
+`joinsColumns`에 member와 조인을 할 member_id를 지정하고 `inverseJoinColumns`에는 Item.item_id를 지정하면 되다.
 
-@oneToMany관계이기 때문에 List로 사용한다. 
+@oneToMany관계이기 때문에 List로 사용한다.
 
-추가적으로 편의메소드를 두개 만든다. 
+추가적으로 편의메소드를 두개 만든다.
 
 ```java
 
-public void addItems(Item item) {    
+public void addItems(Item item) {
 	if (!items.contains(item)) {
 	    items.add(item);
     }
@@ -46,14 +47,14 @@ public List<ItemDto> getItemDtos() {
 
 `addItem()` 메소드는 items에 넣기 위한 메소드이다. 회원마다 동일한 아이템을 중복하지 않기 위해서 contains로 체크하도록 한다.
 
-`getItemDtos()`는 Member를 dto로 변환할때 연관된 Item엔티티를  ItemDto로 처리해서 불러오기 위한 메소드이다. 
+`getItemDtos()`는 Member를 dto로 변환할때 연관된 Item엔티티를 ItemDto로 처리해서 불러오기 위한 메소드이다.
 
-MemberDto에 itemDtos를 처리하는 로직을 추가한다. 
+MemberDto에 itemDtos를 처리하는 로직을 추가한다.
 
 ```java
 @Builder.Default
-private List<ItemDto> itemDtos = new ArrayList<>()    
-    
+private List<ItemDto> itemDtos = new ArrayList<>()
+
 public static MemberDto of(Member member) {
 return MemberDto.builder()
 	.memberId(member.getMemberId())
@@ -66,7 +67,7 @@ return MemberDto.builder()
 
 이제 아이템 등록을 위한 Service를 추가하도록 한다.
 
-```java 
+```java
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -88,26 +89,26 @@ jpa에서 제공하는 `saveAll()`메소드를 이용해서 아이템을 일괄 
 
 ```json
 [
-  {
-    "itemName": "자바책",
-    "itemType": "BOOK"
-  },
-  {
-    "itemName": "진공청소기",
-    "itemType": "ELECTRONIC"
-  },
-  {
-    "itemName": "소고기",
-    "itemType": "FOOD"
-  },
-  {
-    "itemName": "점퍼",
-    "itemType": "DRESS"
-  }
+    {
+        "itemName": "자바책",
+        "itemType": "BOOK"
+    },
+    {
+        "itemName": "진공청소기",
+        "itemType": "ELECTRONIC"
+    },
+    {
+        "itemName": "소고기",
+        "itemType": "FOOD"
+    },
+    {
+        "itemName": "점퍼",
+        "itemType": "DRESS"
+    }
 ]
 ```
 
-이제 해당 회원에게 아이템을 저장하도록 하자. 
+이제 해당 회원에게 아이템을 저장하도록 하자.
 
 ```java
 
@@ -130,7 +131,7 @@ Service에서 addItem은 먼저 memberId를 파라미터로 받고 Item에서 �
 
 memberId의 유효성을 체크하고 itemIds의 유효성도 체크한다. 그리고 item 엔티티를 가져와서 Member엔티티의 `addItem` 메소드를 이용해서 저장한다. 결과값은 아래와 같다.
 
-```java 
+```java
 {
     "memberId": 2,
     "userId": "park",
@@ -150,9 +151,8 @@ memberId의 유효성을 체크하고 itemIds의 유효성도 체크한다. 그�
 }
 ```
 
-실제DB에서 my_item을 select하면 member_id, item_id가 각각 잘 저장되어 있음을 확인할 수 있다. 
+실제DB에서 my_item을 select하면 member_id, item_id가 각각 잘 저장되어 있음을 확인할 수 있다.
 
-이렇게 JPA에서 @JoinTable을 이용하면 간단하고 쉽게 처리할 수 있다. 다만 만약 조인테이블이 각각 연관된 테이블의 PK등을 담는 것을 넘어선 어떤 상태값이나, 날짜등의 추가적인 컬럼이 필요하다면 별도의 entity를 만들어서 구현하는 것이 좋다. 
+이렇게 JPA에서 @JoinTable을 이용하면 간단하고 쉽게 처리할 수 있다. 다만 만약 조인테이블이 각각 연관된 테이블의 PK등을 담는 것을 넘어선 어떤 상태값이나, 날짜등의 추가적인 컬럼이 필요하다면 별도의 entity를 만들어서 구현하는 것이 좋다.
 
 [jpa-demo](https://github.com/yookeun/jpa-demo)
-

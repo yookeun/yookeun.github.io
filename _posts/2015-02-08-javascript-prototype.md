@@ -1,24 +1,25 @@
 ---
-layout: post
-title:  "자바스크립트의 프로토타입(Prototype)은 무엇인가"
-date:   2015-02-08
-categories: javascript
+layout: single
+title: "자바스크립트의 프로토타입(Prototype)은 무엇인가"
+date: 2015-02-08
+categories: [javascript]
+tags: [javascript]
 ---
 
-자바스크립트에서 중요한 개념중에 하나가 바로 프로토타입이다. 프로토타입은 무엇인가?  
+자바스크립트에서 중요한 개념중에 하나가 바로 프로토타입이다. 프로토타입은 무엇인가?
 
 `더글락스의 크락포드의 자바스크립트의 핵심가이드(한빛미디어)`에서 프로토타입을 설명을 부분이다.
 
->모든 객체는  속성을 상속하는 프로토타입 객체에 연결되어 있습니다.  
->객체 리터럴로 생성되는 모든 객체는 자바스크립트의 표준 객체인 Object의 속성인 prototype(Object.prototype)객체에 연결됩니다.
+> 모든 객체는 속성을 상속하는 프로토타입 객체에 연결되어 있습니다.  
+> 객체 리터럴로 생성되는 모든 객체는 자바스크립트의 표준 객체인 Object의 속성인 prototype(Object.prototype)객체에 연결됩니다.
 
 자바스크립트에서는 class가 존재하지 않는다. 그래서 자바스크립트에서는 객체의 상속을 위해서 프로토타입이라는 것이 존재하게 된다.
 kimParent라는 객체를 만들고 kimChild라는 객체를 만들었다. 우리는 kimChild에서 kimParent의 속성을 상속받으면서 사용하고 싶다. 그래서 아래처럼 코딩을 했다.
 
 ```javascript
 var kimParent = {
-  name: "kim parent",
-  age : 30
+    name: "kim parent",
+    age: 30,
 };
 var kimChild = kimParent;
 console.log("kimChild = " + kimChild.name);
@@ -27,12 +28,12 @@ console.log("kimChild = " + kimChild.name);
 console.log("kimParent = " + kimParent.name);
 ```
 
-그런데 우리가 의도한 결과와는 다르게 출력된다.  
+그런데 우리가 의도한 결과와는 다르게 출력된다.
 
 ```javascript
-console.log("kimChild = " + kimChild.name); // kim parent가 출력된다.  
+console.log("kimChild = " + kimChild.name); // kim parent가 출력된다.
 console.log("kimChild = " + kimChild.name); // kim child가 출력된다
-//여기까지는 좋다. 그런데  
+//여기까지는 좋다. 그런데
 console.log("kimParent = " + kimParent.name); //kim child가 출력된다.
 ```
 
@@ -42,12 +43,12 @@ console.log("kimParent = " + kimParent.name); //kim child가 출력된다.
 Object.create에 대한 함수를 구현했다. 생성자 함수를 만들고 그 함수에 prototype 속성만들고 그 생성자 함수를 리턴한다.
 
 ```javascript
-if (typeof Object.create !== 'function') {
-  Object.create = function(o) {
-    var F = function(){};
-    F.prototype = o;
-    return new F();
-  };
+if (typeof Object.create !== "function") {
+    Object.create = function (o) {
+        var F = function () {};
+        F.prototype = o;
+        return new F();
+    };
 }
 
 var kimChild = Object.create(kimParent);

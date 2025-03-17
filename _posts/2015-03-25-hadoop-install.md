@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "우분투(Ubuntu 14.04)에 하둡(Hadoop)을 가상모드로 설치하기"
-date:   2015-03-25
-categories: java
+layout: single
+title: "우분투(Ubuntu 14.04)에 하둡(Hadoop)을 가상모드로 설치하기"
+date: 2015-03-25
+categories: [linux]
+tags: [linux, ubuntu]
 ---
 
 하둡(Hadoop)을 설치하려면 먼저 우분투에 자바가 설치되어 있어야 한다.
@@ -45,6 +46,7 @@ export JAVA_HOME=/home/ykkim/java
 ### 2. core-site.xml
 
 {% highlight xml %}
+
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 
@@ -65,6 +67,7 @@ export JAVA_HOME=/home/ykkim/java
 ### 3. hdfs-site.xml
 
 {% highlight xml %}
+
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!-- Put site-specific property overrides in this file. -->
@@ -79,6 +82,7 @@ export JAVA_HOME=/home/ykkim/java
 ### 4. mapred-site.xml
 
 {% highlight xml %}
+
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!-- Put site-specific property overrides in this file. -->
@@ -100,18 +104,18 @@ export JAVA_HOME=/home/ykkim/java
 
 {% highlight bash %}
 15/03/22 17:40:10 INFO namenode.NameNode: STARTUP_MSG:
-/************************************************************
+/****************************\*\*\*\*****************************
 STARTUP_MSG: Starting NameNode
-STARTUP_MSG:   host = ykserver/127.0.1.1
-STARTUP_MSG:   args = [-format]
-STARTUP_MSG:   version = 1.2.1
-STARTUP_MSG:   build = https://svn.apache.org/repos/asf/hadoop/common/branches/branch-1.2 -r 1503152; compiled by 'mattf' on Mon Jul 22 15:23:09 PDT 2013
-STARTUP_MSG:   java = 1.7.0_75
-************************************************************/
+STARTUP_MSG: host = ykserver/127.0.1.1
+STARTUP_MSG: args = [-format]
+STARTUP_MSG: version = 1.2.1
+STARTUP_MSG: build = https://svn.apache.org/repos/asf/hadoop/common/branches/branch-1.2 -r 1503152; compiled by 'mattf' on Mon Jul 22 15:23:09 PDT 2013
+STARTUP_MSG: java = 1.7.0_75
+****************************\*\*\*\*****************************/
 15/03/22 17:40:10 INFO util.GSet: Computing capacity for map BlocksMap
-15/03/22 17:40:10 INFO util.GSet: VM type       = 64-bit
+15/03/22 17:40:10 INFO util.GSet: VM type = 64-bit
 15/03/22 17:40:10 INFO util.GSet: 2.0% max memory = 932184064
-15/03/22 17:40:10 INFO util.GSet: capacity      = 2^21 = 2097152 entries
+15/03/22 17:40:10 INFO util.GSet: capacity = 2^21 = 2097152 entries
 15/03/22 17:40:10 INFO util.GSet: recommended=2097152, actual=2097152
 15/03/22 17:40:11 INFO namenode.FSNamesystem: fsOwner=ykkim
 15/03/22 17:40:11 INFO namenode.FSNamesystem: supergroup=supergroup
@@ -125,9 +129,9 @@ STARTUP_MSG:   java = 1.7.0_75
 15/03/22 17:40:12 INFO namenode.FSEditLog: close success: truncate to 4, editlog=/home/ykkim/hadoop/hadoop-data/dfs/name/current/edits
 15/03/22 17:40:12 INFO common.Storage: Storage directory /home/ykkim/hadoop/hadoop-data/dfs/name has been successfully formatted.
 15/03/22 17:40:12 INFO namenode.NameNode: SHUTDOWN_MSG:
-/************************************************************
+/****************************\*\*\*\*****************************
 SHUTDOWN_MSG: Shutting down NameNode at ykserver/127.0.1.1
-************************************************************/
+****************************\*\*\*\*****************************/
 {% endhighlight %}
 
 이제 정말 하둡과 관련된 데몬을 실행시킨다. 그런데 `localhost`로 설정되어 있으면 중간에 `localhost`로 계속진행할것인지 물어본다.
@@ -168,4 +172,4 @@ jps
 이제 최종적으로 화면에서 확인하자.
 `http://서버아이피:50070` 으로 접속해서 아래 화면이 나오면 하둡이 드디어 설치완료되고 잘 실행중이라는 뜻이다.
 
-<div style="text-align:center;margin-bottom: 30px;"><img src="/assets/images/hadoop.jpg" style="width:480px"></div>  
+<div style="text-align:center;margin-bottom: 30px;"><img src="/assets/images/hadoop.jpg" style="width:480px"></div>

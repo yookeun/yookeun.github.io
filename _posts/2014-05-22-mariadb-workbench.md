@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "ubuntu에서 mariaDB와 mysql-workbench 설치"
-date:   2014-05-22
-categories: database
+layout: single
+title: "ubuntu에서 mariaDB와 mysql-workbench 설치"
+date: 2014-05-22
+categories: [linux]
+tags: [linux, ubuntu, mysql, mariadb]
 ---
 
 우분투에서 mariadb를 수동으로 설치하는 방법과 동시에 apt-get으로 설치하는 방법이 있다.

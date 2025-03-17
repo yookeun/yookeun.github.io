@@ -1,12 +1,13 @@
 ---
-layout: post
-title:  "구글 단축 URL API 사용방법 (Javascript)"
-date:   2014-12-12
-categories: javascript
+layout: single
+title: "구글 단축 URL API 사용방법 (Javascript)"
+date: 2014-12-12
+categories: [javascript]
+tags: [javascript]
 ---
 
 구글에서 제공하는 단축URL API를 이용하여 자바스크립트에서 사용해보자.
-먼저 구글에 개발자로 등록이 되어야 한다.  
+먼저 구글에 개발자로 등록이 되어야 한다.
 
 단축URL페이지로 이동한다.
 
@@ -58,35 +59,34 @@ API 및 인증을 선택하고 API 찾아보기에서 URL를 입력하면 URL관
 <img src="/assets/images/shorturl7.jpg" style="width:100%">
 </div>
 
-
 API키가 생성되면 그것을 가지고 이제 코딩을 하면 된다.
 
 ### 2. 구글 API 스크립트를 등록한다.
 
 ```javascript
- // JavaScript Code
+// JavaScript Code
 /**
  * 단축url 키등록
  */
 function load() {
-    gapi.client.setApiKey('등록된 키값');      
-    gapi.client.load('urlshortener', 'v1',function(){});
+    gapi.client.setApiKey("등록된 키값");
+    gapi.client.load("urlshortener", "v1", function () {});
 }
 ```
 
 스크립트에 등록된 load함수를 통해 api사용키가 클라이언트에 등록된다. `gapi.client.setApiKey`에 위에서 생성한 키를 등록하면 된다.
 
-### 3. 단축URL를  생성되는 로직을 작성한다.
+### 3. 단축URL를 생성되는 로직을 작성한다.
 
 ```javascript
 var request = gapi.client.urlshortener.url.insert({
-    'resource' : {
-        'longUrl' : longURL
-    }
+    resource: {
+        longUrl: longURL,
+    },
 });
-request.execute(function(response) {
-    if (response.id != null) {        
-        console.log(response.id);    
+request.execute(function (response) {
+    if (response.id != null) {
+        console.log(response.id);
     } else {
         console.log("error: creating short url");
     }
@@ -95,7 +95,6 @@ request.execute(function(response) {
 
 `gapi.client.urlshortener.url.insert`의 생성메소들 통해서 longURL에 URL를 단축할 긴주소를 입력받는다.
 그리고 `request.execute`로 실행이 되면서 `response.id`에 실제 단축된 주소가 나온다.
-
 
 마지막으로 아래 스크립트를 html하단에 기재한다.
 
@@ -106,48 +105,50 @@ request.execute(function(response) {
 아래는 최종 샘플소스이다.
 
 ```html
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-	    <meta charset="UTF-8">
-	    <title>Document</title>
-	    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-	</head>
-	<body>    
-	    <input type="text" id="longURL"><button id="makeShortURL">단축URL생성</button><br>
-	    <input type="text" id="shortURL">
-	</body>
-	<script>
-	/**
-	 * 단축url 키등록
-	 */
-	function load() {
-	    gapi.client.setApiKey('등록된 키를 여기에 입력');      
-	    gapi.client.load('urlshortener', 'v1',function(){});
-	}
-	/**
-	 * 단축 URL생성
-	 */
-	$('#makeShortURL').click(function(){
-	    var longURL = $('#longURL').val();    
-	    var request = gapi.client.urlshortener.url.insert({
-	        'resource' : {
-	            'longUrl' : longURL
-	        }
-	    });
-	    request.execute(function(response) {
-	        if (response.id != null) {        
-	            console.log(response.id);
-	            $('#shortURL').val(response.id);
-	        } else {
-	            alert("error: creating short url");
-	        }
-	    });
-	});    
-	</script>
-	<script src="https://apis.google.com/js/client.js?onload=load"></script>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Document</title>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    </head>
+    <body>
+        <input type="text" id="longURL" /><button id="makeShortURL">
+            단축URL생성</button
+        ><br />
+        <input type="text" id="shortURL" />
+    </body>
+    <script>
+        /**
+         * 단축url 키등록
+         */
+        function load() {
+            gapi.client.setApiKey("등록된 키를 여기에 입력");
+            gapi.client.load("urlshortener", "v1", function () {});
+        }
+        /**
+         * 단축 URL생성
+         */
+        $("#makeShortURL").click(function () {
+            var longURL = $("#longURL").val();
+            var request = gapi.client.urlshortener.url.insert({
+                resource: {
+                    longUrl: longURL,
+                },
+            });
+            request.execute(function (response) {
+                if (response.id != null) {
+                    console.log(response.id);
+                    $("#shortURL").val(response.id);
+                } else {
+                    alert("error: creating short url");
+                }
+            });
+        });
+    </script>
+    <script src="https://apis.google.com/js/client.js?onload=load"></script>
 </html>
 ```
 
 **참고사이트** :
-<https://developers.google.com/api-client-library/javascript/samples/samples>  
+<https://developers.google.com/api-client-library/javascript/samples/samples>

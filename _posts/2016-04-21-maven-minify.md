@@ -1,9 +1,11 @@
 ---
-layout: post
-title:  "Maven에서 js 파일 minify 하기"
-date:   2016-04-21
-categories: java
+layout: single
+title: "Maven에서 js 파일 minify 하기"
+date: 2016-04-21
+categories: [java]
+tags: [java, maven]
 ---
+
 Maven에서 js파일을 압축하여 패키징하도록 해보자.
 일단, 개발자들의 로컬에서는 압축되지 않은 상태로 사용하다고 패키징할때 압축하여 배포하는 방식으로 사용하면 편하다.
 보통은 aa.js을 aa.min.js으로 압축하지만 만약 각각의 jsp나 html파일에 js경로가 적혀있다면 각각 수정해야 하는 번거로움이 생긴다.
@@ -18,7 +20,7 @@ pom.xml에서 아래 소스를 `<plugins></plugins>`안에 넣자.
 ```xml
 <plugin>
   <groupId>com.samaxes.maven</groupId>
-    <artifactId>minify-maven-plugin</artifactId>                   
+    <artifactId>minify-maven-plugin</artifactId>
       <version>1.7.4</version>
       <executions>
         <execution>
@@ -28,15 +30,15 @@ pom.xml에서 아래 소스를 `<plugins></plugins>`안에 넣자.
             <goal>minify</goal>
           </goals>
           <configuration>
-            <charset>utf-8</charset>                            
+            <charset>utf-8</charset>
             <skipMerge>true</skipMerge>
             <nosuffix>true</nosuffix>
-            <jsEngine>CLOSURE</jsEngine>                   
+            <jsEngine>CLOSURE</jsEngine>
             <jsSourceDir>resources/js/cores</jsSourceDir>
             <jsTargetDir>resources/js/coresmin</jsTargetDir>
             <jsSourceIncludes>
             <jsSourceInclude>*.js</jsSourceInclude>
-            </jsSourceIncludes>                                                                              		
+            </jsSourceIncludes>
           </configuration>
         </execution>
     </executions>
@@ -69,7 +71,6 @@ pom.xml 설정은 이것으로 끝났다. 하지만 문제가 있다. 위에 처
 ```
 
 즉, 로컬에서 패키징하기전에 수정해야 한다는 것이다.이 부분을 해결할 플러그인을 찾지 못해 다음과 같은 방법으로 해결했다.
-
 
 ### 2. properties를 이용하여 경로 변경하기
 
@@ -109,6 +110,7 @@ protected String home(Locale locale, Model model) {
 이렇게 되면 로컬에서 압축안된 파일로 작업해도 경로를 다시 변경할 필요가 없고 패키징하면 압축된 경로로 보이게 된다.
 
 ### 3. 패키징하기
+
 자, 이제 로컬에서 마음껏 작업하고 아래처럼 패키징하면 원본 js파일을 해당경로로 압축하고 원본은 삭제하면서 war로 만들어준다.
 Jenkins와 연동되어 있다면 그냥 Push 하면 상황종료다!
 
@@ -117,6 +119,7 @@ mvn package ( or mvn package -P demo)
 ```
 
 ### 4. 주의사항
+
 `mvn package` 하면 만약 js파일에 문제가 있다면 컴파일 에러가 표시된다.
 
 ```bash
@@ -141,8 +144,8 @@ WARNING: 1 error(s), 0 warning(s)
 
 ```javascript
 var TEST = {
-		name : "",
-		age: "",
+    name: "",
+    age: "",
 };
 ```
 

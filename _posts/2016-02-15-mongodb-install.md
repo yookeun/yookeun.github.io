@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "Ubuntu에서 Mongodb 설치하기"
-date:   2016-02-15
-categories: database
+layout: single
+title: "Ubuntu에서 Mongodb 설치하기"
+date: 2016-02-15
+categories: [linux]
+tags: [linux, ubuntu, mongodb]
 ---
 
 Ubuntu 14.04 에서 Mongodb를 설치해보자.  
@@ -92,6 +93,5 @@ sudo chmod 755 /etc/init.d/disable-transparent-hugepages
 
 sudo update-rc.d disable-transparent-hugepages defaults
 ```
-
 
 참고 : <https://docs.mongodb.org/manual/tutorial/transparent-huge-pages/#transparent-huge-pages-thp-settings>

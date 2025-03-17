@@ -1,11 +1,12 @@
 ---
-layout: post
-title:  "[JAVA] 자바에서 부모클래스에서 자식클래스 메소드 사용하기"
-date:   2015-01-13
-categories: java
+layout: single
+title: "[JAVA] 자바에서 부모클래스에서 자식클래스 메소드 사용하기"
+date: 2015-01-13
+categories: [java]
+tags: [java]
 ---
 
-부모클래스에서 자식클래스의 메소드를 사용할 때가 있다. 자칫 혼돈되기 쉬운 부분이다.  
+부모클래스에서 자식클래스의 메소드를 사용할 때가 있다. 자칫 혼돈되기 쉬운 부분이다.
 
 다음의 부모 클래스가 있다고 한다..
 
@@ -34,8 +35,8 @@ Parent parent = new Child();
 parent.parentMethod();
 ```
 
-"나는 부모다" 라는 메시지가 출력된다.  그리고 parent는 당연히 부모 클래스의 메소드(parentMethod)만 접근할 수 있다.
-그런데 만약 parent에서 자식 메소드(childMethod)를 호출하고 싶다면 어떻게 해야 할까?  
+"나는 부모다" 라는 메시지가 출력된다. 그리고 parent는 당연히 부모 클래스의 메소드(parentMethod)만 접근할 수 있다.
+그런데 만약 parent에서 자식 메소드(childMethod)를 호출하고 싶다면 어떻게 해야 할까?
 
 간단한 것인데 의외로 모를 수 있다.
 

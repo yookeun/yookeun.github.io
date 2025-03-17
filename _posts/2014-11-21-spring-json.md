@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "Spring에서 JSON과 연동방법"
-date:   2014-11-21
-categories: java
+layout: single
+title: "Spring에서 JSON과 연동방법"
+date: 2014-11-21
+categories: [java]
+tags: [java, spring, json]
 ---
 
 Spring에서 JSON과 REST API로 연결하는 방법은 두 가지가 있다.
@@ -28,16 +29,16 @@ Spring에서 JSON과 REST API로 연결하는 방법은 두 가지가 있다.
     <artifactId>jackson-databind</artifactId>
     <version>2.0.4</version>
 </dependency>
-```    
+```
 
 그리고 `servlet.xml`에 다음을 추가한다.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Spring 과 json과의  연동 설정 -->   
+<!-- Spring 과 json과의  연동 설정 -->
 <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
     <property name="messageConverters">
-    <list>    
+    <list>
         <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
             <property name="supportedMediaTypes">
                 <list>
@@ -45,10 +46,10 @@ Spring에서 JSON과 REST API로 연결하는 방법은 두 가지가 있다.
                     <value>application/json;charset=UTF-8</value>
                 </list>
             </property>
-        </bean>            
+        </bean>
     </list>
-    </property>                        
-</bean>    
+    </property>
+</bean>
 ```
 
 JSON으로 넘겨주는 JS파일은 아래와 같이 처리하면 된다.
@@ -57,7 +58,7 @@ JSON으로 넘겨주는 JS파일은 아래와 같이 처리하면 된다.
 // JavaScript Code
 var param = {
     "name": "홍길동",
-    "age": 22    
+    "age": 22
 };
 
 $.ajax({
@@ -67,10 +68,10 @@ $.ajax({
     url:  'test/testing/select',
     error: function() {
     	//에러처리
-    },                
+    },
     success: function(returnJSON) {
     	//성공처리
-	}    
+	}
 }):
 ```
 
@@ -83,7 +84,7 @@ JS파일에만 처리해주면 된다.
 // JavaScript Code
 var param = {
     "name": "홍길동",
-    "age": 22    
+    "age": 22
 };
 
 $.ajax({
@@ -94,10 +95,10 @@ $.ajax({
     url:  'test/testing/select',
     error: function() {
         //에러처리
-    },                
+    },
     success: function(returnJSON) {
     	//성공처리
-	}    
+	}
 }):
 ```
 

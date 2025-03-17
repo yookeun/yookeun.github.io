@@ -1,9 +1,11 @@
 ---
-layout: post
-title:  "Spring에서 Properties 사용"
-date:   2015-12-22
-categories: java
+layout: single
+title: "Spring에서 Properties 사용"
+date: 2015-12-22
+categories: [java]
+tags: [java, spring]
 ---
+
 Spring에서 Properties파일을 읽어들이는 부분을 처리할 수 있다.
 먼저 application.xml에 다음과 같이 추가한다.
 
@@ -13,14 +15,14 @@ Spring에서 Properties파일을 읽어들이는 부분을 처리할 수 있다.
   .....
   xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
-  ....  
+  ....
 />
 ```
 
 Properties파일의 경로를 설정한다.
 
 ```xml
-<util:properties id="props" location="classpath:/properties/hello.properties" />     
+<util:properties id="props" location="classpath:/properties/hello.properties" />
 ```
 
 여기서 classpath는 src/main/resources로 설정된 부분이다.
@@ -34,7 +36,7 @@ hello.number=12345
 Spring Controller소스에서 사용하려면 다음과 같이 적는다.
 
 ```java
-//Controller  
+//Controller
 @Value("#{props['hello.number']}")
 private String helloNumber;
 ```

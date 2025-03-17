@@ -1,22 +1,23 @@
 ---
-layout: post
-title:  "Ubuntu에서 Ruby 설치하기"
-date:   2015-08-21
-categories: ruby
+layout: single
+title: "Ubuntu에서 Ruby 설치하기"
+date: 2015-08-21
+categories: [linux]
+tags: [linux, ubuntu, ruby]
 ---
 
-우분투(14.04)에서 루비(2.2.3)를 설치해보자.  
+우분투(14.04)에서 루비(2.2.3)를 설치해보자.
 
 루비를 설치하는 방법은 두 rvm과 rbenv로 설치하는 두 가지 방법이 있다. 나중에 레일즈도 설치해야 하므로 rbenv로 설치를 진행한다.
 rbenv가 rvm보다 사용법이 간단하다고 한다.
 
-먼저, 사전에 git등은 설치되어 있어야 한다.  그리고 아래 라이브러리를 설치한다.
+먼저, 사전에 git등은 설치되어 있어야 한다. 그리고 아래 라이브러리를 설치한다.
 
 ```bash
 sudo apt-get install curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
 ```
 
- 그리고 github에서 rbenv를 클론한다. 자신의 홈디렉토리에서 작업을 수행한다.
+그리고 github에서 rbenv를 클론한다. 자신의 홈디렉토리에서 작업을 수행한다.
 
 ```bash
 git clone git://github.com/sstephenson/rbenv.git .rbenv
@@ -83,4 +84,5 @@ rbenv rehash
 ```bash
 sudo ln -s /home/사용자홈디렉토리/.rbenv/shims/ruby /usr/bin/ruby
 ```
+
 이렇게 하면 서브라임에서도 루비로 빌드가 가능해진다.

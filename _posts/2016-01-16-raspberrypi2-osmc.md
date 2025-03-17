@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "라즈베리파이2(Raspberry Pi2)에서 OSMC를 이용해 영화를 보자"
-date:   2016-01-16
-categories: linux
+layout: single
+title: "라즈베리파이2(Raspberry Pi2)에서 OSMC를 이용해 영화를 보자"
+date: 2016-01-16
+categories: [linux]
+tags: [linux]
 ---
 
 보통 집에서 다운받은 영화나 미드를 볼 때, 거실에서 TV등과 연결해서 보고 싶을 때가 있다.
@@ -17,19 +18,18 @@ categories: linux
 
 필요한 하드웨어들은 다음과 같다.
 
-- 라즈베리파이2 (반드시 2이어야 한다)
-- 라즈베리파이2 공식케이스 : 다른 케이스는 잘 부서진다고 함
-- 5PIN 전원 연결장치 : 보통 안드로이드 스마트폰 충전기 (5v, 2000mA)
-- 무선랜카드 (물론 랜선으로도 가능하다)
-- Micro SD Card : OS를 설치용 (최소 8G이상이어야 함: 권장은 16 or 32G)
-- Micro SD Card Reader : PC에서 Micro SD 에 연결하기 위함.
-- HDMI 케이블 : TV 연결
-- 키보드(USB 연결)
+-   라즈베리파이2 (반드시 2이어야 한다)
+-   라즈베리파이2 공식케이스 : 다른 케이스는 잘 부서진다고 함
+-   5PIN 전원 연결장치 : 보통 안드로이드 스마트폰 충전기 (5v, 2000mA)
+-   무선랜카드 (물론 랜선으로도 가능하다)
+-   Micro SD Card : OS를 설치용 (최소 8G이상이어야 함: 권장은 16 or 32G)
+-   Micro SD Card Reader : PC에서 Micro SD 에 연결하기 위함.
+-   HDMI 케이블 : TV 연결
+-   키보드(USB 연결)
 
 ![ras1](/assets/images/ras1.jpg)
 
 보통 옥션이나 11번가에서 관련 장비를 한꺼번에 파는 경우가 있으니 일괄구매하는 것이 나을 수 있다.
-
 
 **전원 연결장치는 5v에 2000mA (2A)를 구매하는 것이 좋다. 일반 스마트폰은 1000mA(1A)인데 이것을 사용하면 전류가 낮아서
 OSMC에서 조그만 무지개박스가 보이게 된다. 물론 영화보는데는 지장은 없지만, 추후에 외장하드연결을 할 수 있으니 2000mA로 하는 것이 좋다
@@ -39,13 +39,14 @@ OSMC에서 조그만 무지개박스가 보이게 된다. 물론 영화보는데
 
 필요한 소프트웨어는 다음과 같다.
 
-- [SD formatter](https://www.sdcard.org/downloads/formatter_4/) : SD카드를 포멧한다.
-- [OSMC](https://osmc.tv/) : 라즈베리파이2에 설치될 OS
-- [PUTTY](http://www.putty.org/) : 윈도우에서 라즈베리파이에 접속터미널
+-   [SD formatter](https://www.sdcard.org/downloads/formatter_4/) : SD카드를 포멧한다.
+-   [OSMC](https://osmc.tv/) : 라즈베리파이2에 설치될 OS
+-   [PUTTY](http://www.putty.org/) : 윈도우에서 라즈베리파이에 접속터미널
 
 `SD formatter`가 필요한 이유는 고용량의 SD카드를 윈도우에서 제대로 감지 못한다. 그래서 정식포맷프로그램을 이용해서 포멧한다.
 
 ### 2. Micro SD 설치
+
 모든 준비가 완료되었다면 이제 SD카드에 설치를 해보자 그전에 먼저 SD formatter를 이용해서 포멧부터 한다.
 
 ![ras2](/assets/images/ras2.jpg)
@@ -57,50 +58,48 @@ OSMC에서 조그만 무지개박스가 보이게 된다. 물론 영화보는데
 
 ![ras3](/assets/images/ras3.jpg)
 
-
 여기서는 윈도우 기반으로 설명한다.
 OSMC 관련 파일을 받으면 osmc installer.exe를 실행하자.
 
 ![ras4](/assets/images/ras4.jpg)
-*Raspberry Pi2 를 선택한다*
+_Raspberry Pi2 를 선택한다_
 
 ![ras5](/assets/images/ras5.jpg)
-*가장 최신의 날짜를 선택한다*
+_가장 최신의 날짜를 선택한다_
 
 ![ras6](/assets/images/ras6.jpg)
-*SD카드를 선택*
+_SD카드를 선택_
 
 ![ras7](/assets/images/ras7.jpg)
-*무선선택*
+_무선선택_
 
 ![ras8](/assets/images/ras8.jpg)
-*본인의 와이파이 설정을 해주면 된다*
+_본인의 와이파이 설정을 해주면 된다_
 
 그 다음은 Next만 계속 해주면 된다. 그러면 downloading과정과 install 과정을 마치게 되면 congratulations 화면이 나오고 quit를 눌러 종료하면
-SD카드에 OSMC 관련 파일이 모두 설치된 것이다.  
+SD카드에 OSMC 관련 파일이 모두 설치된 것이다.
 
 이제 SD카드를 라즈베리파이2에 삽입하자. 무선랜카드도달고 전원도 연결하면 아래화면처럼 진행화면이 나온다.
 모두 설치가 완료되면 자동으로 리부팅된다.
 
 ![ras9](/assets/images/ras9.jpg)
-*설치중...*
-
+_설치중..._
 
 ### 3. 세팅
 
 ![ras10](/assets/images/ras10.jpg)
-*설치완료 - 환경설정*
+_설치완료 - 환경설정_
 
 완료된 화면이다. 처음에는 언어설정을 반드시 English(us)로 하자. Korean으로 하면 지원하는 한글폰트가 없어서 모두 깨져서 나온다.
 시간 설정은 마찬가지로 seoul로 설정한다. 키보드의 화살표로 메뉴로 이동할 수 있다.
 
 이제 한글폰트를 받아서 설치하자. 한글폰트를 설치해야 제목이 한글인 파일도 읽을 수 있고, 자막도 원할하게 읽을 수 있다.
 
-윈도우에서  putty로 연결한다 putty는 ssh로 라즈베리파이에 접속할 수 있다.
+윈도우에서 putty로 연결한다 putty는 ssh로 라즈베리파이에 접속할 수 있다.
 putty에 해당 아아피를 입력하고 ssh 방식으로 접속한다.
 
 ![ras10](/assets/images/ras11.jpg)
-*putty 접속*
+_putty 접속_
 
 아이디랑 비번은 초기값은 osmc/osmc 이다.
 접속이 잘되면 이제 한글 폰트를 설치해야 한다. 나눔폰트를 설치할 것이다. 이 한글폰트로 시스템언어를 한글로 할 것이고, 자막폰트역시 나눔폰트로 변경할 것이다.
@@ -156,16 +155,16 @@ vi /usr/share/kodi/addons/skin.confluence/720p/Font.xml
 먼저 OSMC 한글설정을 변경한다. `International -> Language` 에서 Korean으로 변경한다.
 
 ![ras12](/assets/images/ras12.jpg)
-*OSMC 한글설정변경*
+_OSMC 한글설정변경_
 
 ![ras13](/assets/images/ras13.jpg)
-*OSMC 스킨변경*
+_OSMC 스킨변경_
 
 Confluence의 스킨을 선택한다. Confluence는 XBMC UI이다. 이 스킨으로 변경하는 이유는 좀더 직관적이고
 무엇보다 스마트폰으로 XBMC앱을 깔면 스마트폰을 리모콘으로 사용할 수 있기 때문이다.
 
 ![ras14](/assets/images/ras14.jpg)
-*Confluence의 스킨사용*
+_Confluence의 스킨사용_
 
 스킨을 변경하면 적용하겠는냐는 메시지고 나오고 정상적으로 처리되면 한글로 표시될 것이다.
 (한글이 안보인다면 시스템으로 가서 언어설정을 Korean으로 해주면 된다)
@@ -173,61 +172,61 @@ Confluence의 스킨을 선택한다. Confluence는 XBMC UI이다. 이 스킨으
 만약에 화면이 사이즈가 아래와 같이 안맞는다면 조정이 필요하다.
 
 ![ras15](/assets/images/ras15.jpg)
-*화면짤림(시간표시가 짤린다)*
+_화면짤림(시간표시가 짤린다)_
 
 `시스템->비디오출력->비디오조정`으로 이동한다.
 
 ![ras16](/assets/images/ras16.jpg)
-*화면짤림(시간표시가 짤린다)*
+_화면짤림(시간표시가 짤린다)_
 
 왼쪽상단의 모서리를 키보드 화살표로 화면에 맡게 조정한다.
 
 ![ras17](/assets/images/ras17.jpg)
-*화면크기조정*
+_화면크기조정_
 
 처음에는 저 꺽쇠표시가 잘 안보인다. 키보드의 화살표로 보이게 한다음 모서리에 맞추면 된다.
 그런 다음 엔터를 치면 오른쪽하단에도 역시 조정하는 부분이 나온다.
 이제 모든 조정이 완료가 되었다. 다음은 PC와 연결하여 드디어 영화를 보도록 하자.
 
 ### 4. 영화보기
+
 OSMC에는 이미 SAMBA가 설치되어 있다. SAMBA를 이용해서 라즈베리파이에서 윈도우에 공유된 폴더로 직접 연결이 가능하다.
 윈도우에서 영화폴더를 공유한다.
 
 `비디오->파일`로 이동한다.
 
 ![ras18](/assets/images/ras18.jpg)
-*비디오 - 파일*
+_비디오 - 파일_
 
 `비디오소스추가`에서 `탐색` 을 선택하고 윈도우 네트워크(SMB)를 선택한다.
 
 ![ras19](/assets/images/ras19.jpg)
-*윈도우 네트워크(SMB)*
+_윈도우 네트워크(SMB)_
 
 선택하면 같은 네트워크에 있다면 연결할 PC이름이 보일 것이다. 계정과 비번을 입력하고, `이 경로를 기억` 을 체크하면 공유된 폴더가 나온다.
 해당 폴더를 선택하고 확인하여 아래의 같은 `비디오소스추가`를 이용하여 저장한다. 이렇게 하면 다음부터는 바로 접근이 가능하다.
 
 ![ras20](/assets/images/ras20.jpg)
-*비디오소스추가*
+_비디오소스추가_
 
 아래 화면처럼 메인화면에서 `비디오 -> 파일`로 선택하면 우리가 추가한 윈도우와 연결된 폴도명이 보인다.
 
 ![ras21](/assets/images/ras21.jpg)
-*추가된 폴더*
+_추가된 폴더_
 
 모든 작업이 완료가 되었다. 자막도 잘 나오니 이제부터 영화를 즐기면 된다.
 
 ![ras22](/assets/images/ras22.jpg)
-*영화보기*
-
+_영화보기_
 
 ### 5. 리모콘
+
 XBMC 에서는 리모콘으로 조정이 가능하다. 그러나 잘 안되는 부분도 있으니, XMBC 앱을 이용하여 리모콘으로 사용하자.
 집에서 놀구 있는 구형 안드로이드 폰을 사용해도 되고, 아이폰을 사용해도 되지만 안드로이드 앱은
 XBMC 에서 공식으로 만든 어플이 있어 더 안정정적이다.
 아이폰을 사용하려면 앱스토어에서 kobi나 xbmc등으로 검색하여 적절한 리모콘앱을 설치하면 된다.
 
 ![ras23](/assets/images/ras23.jpg)
-*XBMC에서 지원하는 공식 안드로이드용 앱*
+_XBMC에서 지원하는 공식 안드로이드용 앱_
 
-
-- [안드로이드 공식 XBMC 어플](https://play.google.com/store/apps/details?id=org.xbmc.kore)
+-   [안드로이드 공식 XBMC 어플](https://play.google.com/store/apps/details?id=org.xbmc.kore)

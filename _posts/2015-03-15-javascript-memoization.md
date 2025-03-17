@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "자바스크립트에서 메모이제이션(Memoization) 패턴"
-date:   2015-03-15
-categories: javascript
+layout: single
+title: "자바스크립트에서 메모이제이션(Memoization) 패턴"
+date: 2015-03-15
+categories: [javascript]
+tags: [javascript]
 ---
 
 자바스크립트에서 메모이제이션패턴에 대해 알아보자.
@@ -13,13 +14,13 @@ categories: javascript
 
 ```javascript
 var count1 = 0;
-var fibonacci = function(n) {
-  count1++;
-  return n < 2 ? n: fibonacci(n - 1) + fibonacci(n - 2);
+var fibonacci = function (n) {
+    count1++;
+    return n < 2 ? n : fibonacci(n - 1) + fibonacci(n - 2);
 };
 
 for (var i = 0; i <= 10; i += 1) {
-  console.log(i + " = " + fibonacci(i));
+    console.log(i + " = " + fibonacci(i));
 }
 console.log("count1 = " + count1);
 ```
@@ -28,25 +29,25 @@ console.log("count1 = " + count1);
 이렇게 되면 성능에 막대한 영향을 준다. 따라서 위에 함수를 메모제이셔패턴으로 아래처럼 변경해보자.
 
 ```javascript
-var fibonacci2 = function(){
-  var memo = [0, 1];
-  var count2 = 0;
-  var fib = function(n) {
-    count2++;
-    var result = memo[n];
-    if (typeof result !== 'number') {
-      result = fib(n-1) + fib(n-2);
-      memo[n] = result;
-    }
-    return result;
-  };
-  return fib;
-}();
+var fibonacci2 = (function () {
+    var memo = [0, 1];
+    var count2 = 0;
+    var fib = function (n) {
+        count2++;
+        var result = memo[n];
+        if (typeof result !== "number") {
+            result = fib(n - 1) + fib(n - 2);
+            memo[n] = result;
+        }
+        return result;
+    };
+    return fib;
+})();
 
 for (var i = 0; i <= 10; i += 1) {
-  console.log(i + " = " + fibonacci2(i));
+    console.log(i + " = " + fibonacci2(i));
 }
-console.log("count2 = " + count2)
+console.log("count2 = " + count2);
 ```
 
 이렇게 변경되면 29번만 함수가 실행된다(count2를 확인해보자)

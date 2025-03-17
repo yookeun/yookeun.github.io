@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "Ubuntu에서 mariadb 설치하기"
-date:   2013-10-23
-categories: linux
+layout: single
+title: "Ubuntu에서 mariadb 설치하기"
+date: 2013-10-23
+categories: [linux]
+tags: [linux, ubuntu, mariadb]
 ---
 
 mariaDB 파일 설치
@@ -25,8 +26,8 @@ mysql의 data파일을 디폴트로 사용하지 말고 별도로 만들어서 �
 mkdir mysqldata
 ```
 
-넘겨받은 my.cnf에 datadir, basedir를 올바르게 기재한후에  `/etc/my.cnf` 로 만든다.
-넘겨받은 mysqld에서 datadir, basedir, my.cnf 위치를 확인한후에  `/etc/init.d`로 복사한다.
+넘겨받은 my.cnf에 datadir, basedir를 올바르게 기재한후에 `/etc/my.cnf` 로 만든다.
+넘겨받은 mysqld에서 datadir, basedir, my.cnf 위치를 확인한후에 `/etc/init.d`로 복사한다.
 
 ```bash
 sudo su -->root로 로긴
@@ -46,7 +47,6 @@ mysql계정과 그룹생성
 groupadd mysql
 sudo useradd -g mysql mysql
 ```
-
 
 설치된 mysql로 이동
 

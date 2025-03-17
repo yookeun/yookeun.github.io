@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "Java application에서 Spring component scan을 사용하는 방법"
-date:   2015-03-01
-categories: java
+layout: single
+title: "Java application에서 Spring component scan을 사용하는 방법"
+date: 2015-03-01
+categories: [java]
+tags: [java, spring]
 ---
 
 Java 어플리케이션에서 (public static void main())에서 Spring으로 xml파일을 읽어들이고,
@@ -75,13 +76,13 @@ public class BookMain {
 
 메인클래스에서 `@Component` 를 추가해준다.
 그리고 나서 `ClassPathXmlApplicationContext` 를 이용해서 `ApplicationContext`를 읽어들인다.
-이때, getBean()메소드를 통해서 현재 클래스를 빈으로 읽어들이고 (그래서 `@Component` 가 추가 됨)  
+이때, getBean()메소드를 통해서 현재 클래스를 빈으로 읽어들이고 (그래서 `@Component` 가 추가 됨)
 
 우리가 호출하려는 BookController를 `@Autowired` 한 다음에 main()메소드에서 bookController.show()를 호출하는
 메소드를 처리하고자 하는 start()메소드안에 호출하도록 한다.
 
 즉, Main 클래스가 로딩되면서 `ApplicationContext.xml` 파일을 읽어들이면서,
-component scan를 한 다음에  자신을 Bean으로 처리하면서 `@Autowired` 된 bookController를 접근하는 start()메소드를 통해서
+component scan를 한 다음에 자신을 Bean으로 처리하면서 `@Autowired` 된 bookController를 접근하는 start()메소드를 통해서
 bookController.show()가 실행되는 것이다.
 
 이 클래스를 실행하면 다음과 같이 표시된다.

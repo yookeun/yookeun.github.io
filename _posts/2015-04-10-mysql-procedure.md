@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "MySQL OR MariaDB에서 프로시저(Procedure)를 만들어보자."
-date:   2015-04-10
-categories: database
+layout: single
+title: "MySQL OR MariaDB에서 프로시저(Procedure)를 만들어보자."
+date: 2015-04-10
+categories: [database]
+tags: [database, mysql, mariadb]
 ---
 
 개발하다보면 프로시저를 만들때가 있다.
@@ -29,6 +30,7 @@ CREATE TABLE BOOKS_SELL
 ```
 
 ### 1. Procedure에서 transaction 처리
+
 BOOK테이블에는 초기책에 대한 정보가 입력되고 그리고 BOOK_SELL에 판매될 책의 정보가 입력된다.
 프로시저를 이용해서 BOOKS, BOOKS_SELL 테이블에 입력하도록 한다.
 
@@ -56,15 +58,15 @@ BEGIN
 	/* 만약 SQL에러라면 ROLLBACK 처리한다. */
 	DECLARE exit handler for SQLEXCEPTION
 	  BEGIN
-		ROLLBACK;        
-		SET RESULT = -1;  
+		ROLLBACK;
+		SET RESULT = -1;
 	END;
 
 	/* 트랜젝션 시작 */
 	START TRANSACTION;
 		/* BOOK에 인서트 */
 		INSERT INTO BOOKS(bookID, bookName, bookOriginPrice, bookType)
-		VALUE(_BOOKID, _BOOKNAME, _PRICE, _BOOKTYPE);		
+		VALUE(_BOOKID, _BOOKNAME, _PRICE, _BOOKTYPE);
 
 		/* 책종류에 맞게 가격조정 */
 		IF _BOOKTYPE = 'novel' THEN
@@ -107,7 +109,6 @@ SELECT @RESULT;
 그런데 요구 사항이 발생되어 BOOKS테이블의 원가(bookOriginPrice)가 소설(novel)은 1000원이 올랐고, art는 1500원, 그외는 2000원이 올랐다고 한다.
 그렇다면 각각 테이블을 읽어들여 BOOKS테이블의 bookOriginPrice를 업데이트하고,
 BOOKS_SELL테이블의 bookSellPrice 값도 변경해주어야 한다. 이것을 프로시저를 만들어보자.
-
 
 ```sql
 /* DELIMITER는 프로시저 앞,뒤의 위치하여 안에 있는 부분은  한번에 실행될 수 있게 하는 역할을 한다. */
@@ -174,19 +175,19 @@ BEGIN
 			END IF;
 			UPDATE BOOKS SET bookOriginPrice = _NEW_ORIGIN_PRICE WHERE bookID = _bookID;
 			UPDATE BOOKS_SELL SET bookSellPrice = _NEW_SELL_PRICE WHERE bookID = _bookID;
-			SET _row_count = _row_count + 1;			
+			SET _row_count = _row_count + 1;
 		END IF;
 	UNTIL _done END REPEAT;
 
 	/* 커서를 닫아준다. */
 	CLOSE CURSOR_BOOK;
-	SET RESULT = _row_count;	 
+	SET RESULT = _row_count;
 END$$
 DELIMITER ;
 ```
 
 각각 테이블을 조회하면 증가된 값을 확인할 수 있다.
-이처럼 프로시저내에 select처리를 `cursor`와 `repeat`로 처리 할 수 있다.  
+이처럼 프로시저내에 select처리를 `cursor`와 `repeat`로 처리 할 수 있다.
 
 커서사용법의 주의사항은 아래 블로그를 참조하는 것이 좋다.
 

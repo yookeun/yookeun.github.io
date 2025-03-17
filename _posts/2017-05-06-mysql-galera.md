@@ -1,15 +1,16 @@
 ---
-layout: post
-title:  "MariaDB Galera, Maxscale 설치"
-date:   2017-05-06
-categories: database
+layout: single
+title: "MariaDB Galera, Maxscale 설치"
+date: 2017-05-06
+categories: [database]
+tags: [database, mariadb]
 ---
 
-Mariadb에서 Galera와 Maxscale를 설치해본다. 
+Mariadb에서 Galera와 Maxscale를 설치해본다.
 
 ### 1. Galera 설치
 
-Galera를 사용하려면 최소 3대의 장비가 필요하다. 테스트는 아래 장비로 구성한다. 
+Galera를 사용하려면 최소 3대의 장비가 필요하다. 테스트는 아래 장비로 구성한다.
 
 | server name | ip           |
 | ----------- | ------------ |
@@ -44,7 +45,7 @@ bind-address=0.0.0.0
 #wsrep_slave_threads=1
 #innodb_flush_log_at_trx_commit=0
 
-#추가 
+#추가
 wsrep_provider_options="gcache.size=512M"
 wsrep_cluster_name=test_cluster
 wsrep_node_name=server1
@@ -58,7 +59,7 @@ sudo service mysql stop
 sudo service mysql start --wsrep_cluster_new
 ```
 
-옵션 `—wsrep_cluster_new` 는 최초 1회만 수행하면 된다. 
+옵션 `—wsrep_cluster_new` 는 최초 1회만 수행하면 된다.
 
 **[Server2 세팅]**
 
@@ -80,7 +81,7 @@ wsrep_sst_receive_address=192.160.0.41:4569
 
 **[재시작]**
 
-Server2, Server3각각의 서버를 재시작한다. 
+Server2, Server3각각의 서버를 재시작한다.
 
 ```
 sudo service mysql stop
@@ -101,7 +102,7 @@ wsrep_cluster_address=gcomm://192.168.0.40,192.168.0.41,192.168.0.42
 SHOW STATUS LIKE 'wsrep%';
 ```
 
-그러면 아래와 같이 나오면 정상적으로 세팅된 것이다. 
+그러면 아래와 같이 나오면 정상적으로 세팅된 것이다.
 
 | Variable_name            | Value                                |
 | ------------------------ | ------------------------------------ |
@@ -111,11 +112,9 @@ SHOW STATUS LIKE 'wsrep%';
 | wsrep_cluster_status     | Primary                              |
 | wsrep_connected          | ON                                   |
 
-
-
 **[에러발생시]**
 
-1) 에러
+1. 에러
 
 ```
 Apr 24 16:12:40 ubuntu1 mysqld[8844]: 2017-04-24 16:12:40 140660766763264 [ERROR] WSREP: It may not be safe to bootstrap the cluster from this node. It was not the last one to leave th
@@ -126,15 +125,15 @@ Apr 24 16:12:40 ubuntu1 mysqld[8844]: 2017-04-24 16:12:40 140660766763264 [ERROR
 Galera관련 파일을 삭제한다.
 
 ```
-sudo rm -rf galera.cache grastate.dat wsrep_sst_binlog.tar 
+sudo rm -rf galera.cache grastate.dat wsrep_sst_binlog.tar
 ```
 
-2) 에러 
+2. 에러
 
 ```
 Apr 24 16:40:15 ubuntu1 mysqld[10977]: 2017-04-24 16:40:15 139623460747520 [ERROR] WSREP: failed to open gcomm backend connection: 110: failed to reach primary view: 110 (Connection ti
 Apr 24 16:40:15 ubuntu1 mysqld[10977]:          at gcomm/src/pc.cpp:connect():158
-Apr 24 16:40:15 ubuntu1 mysqld[10977]: 2017-04-24 16:40:15 139623460747520 [ERROR] WSREP: gcs/src/gcs_core.cpp:gcs_core_open():208: Failed to open backend connection: -110 (Connection 
+Apr 24 16:40:15 ubuntu1 mysqld[10977]: 2017-04-24 16:40:15 139623460747520 [ERROR] WSREP: gcs/src/gcs_core.cpp:gcs_core_open():208: Failed to open backend connection: -110 (Connection
 Apr 24 16:40:15 ubuntu1 mysqld[10977]: 2017-04-24 16:40:15 139623460747520 [ERROR] WSREP: gcs/src/gcs.cpp:gcs_open():1380: Failed to open channel 'test_cluster' at 'gcomm://192.168.0.4
 Apr 24 16:40:15 ubuntu1 mysqld[10977]: 2017-04-24 16:40:15 139623460747520 [ERROR] WSREP: gcs connect failed: Connection timed out
 Apr 24 16:40:15 ubuntu1 mysqld[10977]: 2017-04-24 16:40:15 139623460747520 [ERROR] WSREP: wsrep::connect(gcomm://192.168.0.40,192.168.0.41,192.168.0.42) failed: 7
@@ -147,19 +146,19 @@ Apr 24 16:40:15 ubuntu1 mysqld[10977]: 2017-04-24 16:40:15 139623460747520 [ERRO
 sudo galera_new_cluster
 ```
 
-### 2. Galera의 사용시 유의점 
+### 2. Galera의 사용시 유의점
 
 Galera설치후에 auto_increment가 증가하는 문제가 있다.
-즉, 같은  인서트문을 3번 수행하면  auto_increment가 5번부터 시작일때  5,6,7으로 되지 않고 아래처럼 증가한다. 
+즉, 같은 인서트문을 3번 수행하면 auto_increment가 5번부터 시작일때 5,6,7으로 되지 않고 아래처럼 증가한다.
 
-| id   | val  |
-| ---- | ---- |
-| 5    | val1 |
-| 8    | val2 |
-| 13   | val3 |
-| 18   | val4 |
+| id  | val  |
+| --- | ---- |
+| 5   | val1 |
+| 8   | val2 |
+| 13  | val3 |
+| 18  | val4 |
 
-한마디로 auto_increment가 +1이 아닌 노드 갯수만큼 증가한다. 물론 이와 같은 것을 방지하기 위해서는 아래 옵션을 줘서 해결할 수 있다. 
+한마디로 auto_increment가 +1이 아닌 노드 갯수만큼 증가한다. 물론 이와 같은 것을 방지하기 위해서는 아래 옵션을 줘서 해결할 수 있다.
 
 ```
 [galera]
@@ -170,15 +169,15 @@ wsrep_auto_increment_control=off
 
 [MariaDB / Galera Cluster / 데드락이 생긴다!?](https://trazy.gitbooks.io/dbms/content/mariadb-galera-deadlock.html)
 
-### 3. Maxscale 설치 
+### 3. Maxscale 설치
 
-문제를 해결하기 위해서 우리는 [Maxscale](https://mariadb.com/products/mariadb-maxscale) 를 사용하도록 한다. 설치는 쉽다. 홈페이지에서 다운받고 패키지를 설치하면 된다. 우분투에서는 다음과 같이 설치하도록 하자. 
+문제를 해결하기 위해서 우리는 [Maxscale](https://mariadb.com/products/mariadb-maxscale) 를 사용하도록 한다. 설치는 쉽다. 홈페이지에서 다운받고 패키지를 설치하면 된다. 우분투에서는 다음과 같이 설치하도록 하자.
 
 ```
 sudo dpkg -i maxscale-2.0.5-1.ubuntu.xenial.x86_64.deb
 ```
 
-그럼 다음 각각의 maxscale에서 각각의 mariadb를 접속하기 위해서 계정을 만들어주자. 
+그럼 다음 각각의 maxscale에서 각각의 mariadb를 접속하기 위해서 계정을 만들어주자.
 
 ```
 GRANT ALL PRIVILEGES ON *.* TO maxscale@'%' IDENTIFIED BY '1234' WITH GRANT OPTION;
@@ -280,6 +279,4 @@ port=6603
 
 ```
 
-설정이 되면 `service maxscale start` 를 실행시키면 된다.  
-
- 
+설정이 되면 `service maxscale start` 를 실행시키면 된다.

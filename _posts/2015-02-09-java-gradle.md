@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "Maven 사용자를 위한 Gradle 의 간단 사용법"
-date:   2015-02-09
-categories: java
+layout: single
+title: "Maven 사용자를 위한 Gradle 의 간단 사용법"
+date: 2015-02-09
+categories: [java]
+tags: [java, maven, gradle]
 ---
 
 gradle이라는 것을 알았을 때 일단 한숨이 나왔다. 이제 겨우 maven에 적응되었는데 또 다른 툴이라니 오마이갓!
@@ -22,7 +23,7 @@ export PATH = $PATH:$GRADLE/bin
 ```
 
 맥에서 `brew`를 쓴다면 `brew install gradle` 하면 간단히 최신버전이 설치된다.  
-설치후에 콘솔에서 아무나 `gradle -v` 라고 치면 버전명이 나오면 잘 된 것이다. maven설치와 같다.  
+설치후에 콘솔에서 아무나 `gradle -v` 라고 치면 버전명이 나오면 잘 된 것이다. maven설치와 같다.
 
 일단 이클립스에서 생성하는 방법보단 gradle의 특징을 알기 위해선 콘솔에서 그냥 만드는 방법으로 시작한다. 그리고 나서 이클립스에 불러오는 방법을 설명한다.
 먼저 콘솔로 가서 프로젝트를 만들자. 이클립스에서 불러올테니 그냥 workspace안에 만들자.
@@ -111,7 +112,7 @@ Total time: 12.71 secs
 `gralde tasks`를 보면 현재 gradle에서 수행할 수 있는 작업내역들이 나온다. 여기에 우리는 java 플러그인을 추가할 것이다.
 이제 `build.gradle` 라는 파일을 만들고 파일안에 다음과 같이 한 라인을 적고 저장하다.
 
->apply plugin: 'java'
+> apply plugin: 'java'
 
 그리도 나서 다시 gradle tasks를 쳐보자.
 
@@ -193,10 +194,10 @@ BUILD SUCCESSFUL
 ----------------------------------------------------------------------------------------------------------------
 ```
 
-무언가 컴파일이 되었다.helloGradle 디렉토리 구조를 확인해봐자.  `build`라는 폴더가 생성되고 그안에 `libs`라는 폴더가 있고
- `helloGradle.jar` 파일이 생성 된것이 보인다.
+무언가 컴파일이 되었다.helloGradle 디렉토리 구조를 확인해봐자. `build`라는 폴더가 생성되고 그안에 `libs`라는 폴더가 있고
+`helloGradle.jar` 파일이 생성 된것이 보인다.
 
-<div style="text-align:center;margin-bottom: 30px;"><img src="/assets/images/gradle1.jpg" style="width:100%"></div>  
+<div style="text-align:center;margin-bottom: 30px;"><img src="/assets/images/gradle1.jpg" style="width:100%"></div>
 
 gradle로 빌드가 잘 된 것이다. 그러면 maven처럼 라이브러리를 추가하는 법을 알아보자.
 먼저 소스를 수정한다. `(HelloGradle.java) LocalTime` 부분이 추가되었다.
@@ -291,33 +292,33 @@ dependencies {
 
 ```bash
 gradle build
-````
+```
 
 `BUILD SUCCESSFUL` 나오면서 컴파일이 잘 된 것이다.
 
 그런데 우리가 받은 라이브러리는 어디에 있는 것일까? maven에는 홈디렉토리의 `.m2/respository` 에 있어서 거기서 참조하는데 gradle은 어디에 두는 것일까?
 그런데 이것조차 메이븐과 구조와 같다. 홈디렉토리에 보면 `.gradle` 이라는 숨김 폴더가 있다.
 즉 `.gradle > caches > module-2 > files-2.1` 에 보면 `joda-time` 이라는 라이브러리가 보인다.
-구성방식이 거의 메이븐과 같다. 다만  `pom.xml` 대신 위에 `build.gradle`를 이용함으로써 좀더 편리하게 사용할 수 있다.
+구성방식이 거의 메이븐과 같다. 다만 `pom.xml` 대신 위에 `build.gradle`를 이용함으로써 좀더 편리하게 사용할 수 있다.
 
 이제 우리가 만든 helloGradle를 이클립스에서 불러오도록 하자. 먼저. `build.gradle` 에서 eclipse 플러그인을 추가하고 저장하다.
 
->apply plugin 'eclipse'
+> apply plugin 'eclipse'
 
 다음에 이클립스에서 gradle 플러그인이 설치되어있어야 한다. `Eclipse Marketplace`에서 `gradle`를 검색한후에
 `Gradle Integration for Eclipse(4.4) 3.6.3 RELEASE`를 받는다. (이클립스 루나 4.4일 경우)
-그리고 나서  `file > import`에 보면 아래와 같이 보여야 한다. 만약 안보이면 Gradle를 재설치해야 한다.
+그리고 나서 `file > import`에 보면 아래와 같이 보여야 한다. 만약 안보이면 Gradle를 재설치해야 한다.
 
-<div style="text-align:center;margin-bottom: 30px;"><img src="/assets/images/gradle2.jpg" style="width:100%"></div>  
+<div style="text-align:center;margin-bottom: 30px;"><img src="/assets/images/gradle2.jpg" style="width:100%"></div>
 
 Gradle Project를 선택하고 Next를 선택하자
 
-<div style="text-align:center;margin-bottom: 30px;"><img src="/assets/images/gradle3.jpg" style="width:100%"></div>  
+<div style="text-align:center;margin-bottom: 30px;"><img src="/assets/images/gradle3.jpg" style="width:100%"></div>
 
 그러면 `Build Model`를 클릭하라고 나온다. `Build Model`를 클릭하면 eclipse에 맞게 임포트가 된다.
 시키는대로 고분고분 따르자.. 그런 다음 `Finish`를 누르면 아래처럼 나온다.
 
-<div style="text-align:center;margin-bottom: 30px;"><img src="/assets/images/gradle4.jpg" style="width:100%"></div>  
+<div style="text-align:center;margin-bottom: 30px;"><img src="/assets/images/gradle4.jpg" style="width:100%"></div>
 
 `Gradle Dependencies`에 보면 우리가 받은 라이브러리가 보인다. 메이븐과 거의 흡사하다.
 물론 추후에는 `이클립스 Gradle 플러그인`을 이용해서 Gradle프로젝트를 생성하면 된다.
