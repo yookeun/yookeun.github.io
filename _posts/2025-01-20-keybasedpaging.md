@@ -4,7 +4,6 @@ title: "OFFSET VS Key-based Paging 차이점"
 date: 2025-01-20
 categories: [java]
 tags: [jpa]
-
 ---
 
 배치로 페이징 처리시 보통 OFFSET 을 사용하는 경우가 많다. 
