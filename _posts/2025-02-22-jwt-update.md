@@ -15,7 +15,7 @@ runtimeOnly  'io.jsonwebtoken:jjwt-impl:0.12.6'
 runtimeOnly  'io.jsonwebtoken:jjwt-jackson:0.12.6'
 ```
 
-**기존 0.11.5 버전 소스에  setClaims, setIssuedAt, setExpiration 은 모두  deprecated 됨 **
+**기존 0.11.5 버전 소스에  setClaims, setIssuedAt, setExpiration 은 모두  deprecated 됨**
 
 ```java
 public String createToken(Map<String, Object> claims) {
@@ -47,7 +47,7 @@ public String createToken(Map<String, Object> claims) {
 }
 ```
 
-**기존 0.11.5 버전 소스 (SignatureAlgorithm, parserBuilder, setSigningKey, parseClaimsJws, getBody) 처리 부분 ** 
+**기존 0.11.5 버전 소스 (SignatureAlgorithm, parserBuilder, setSigningKey, parseClaimsJws, getBody) 처리 부분** 
 
 ```java 
 public JwtResult extractAllClaims(String token) {
